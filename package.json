@@ -2,18 +2,52 @@
   "name": "abacus",
   "version": "0.1.0",
   "private": true,
+  "author": {
+    "name": "Julia Klebanowycz",
+    "email": "jdk.public@icloud.com",
+    "url": "http://localhost:3000"
+  },
+  "build": {
+    "appId": "com.my-website.my-app",
+    "productName": "Abacus",
+    "copyright": "Copyright © 2020 ${author}",
+    "mac": {
+      "category": "public.app-category.utilities"
+    },
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    }
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "@types/styled-components": "^5.0.1",
+    "electron-is-dev": "^1.2.0",
+    "mobx": "^5.15.4",
+    "mobx-react": "^6.2.1",
+    "moment": "^2.24.0",
+    "node-sass": "^4.13.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "styled-components": "^5.1.0",
+    "styled-icons": "9.5.0"
   },
+  "main": "public/electron.js",
+  "homepage": "./",
   "scripts": {
+    "dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
+    "postinstall": "electron-builder install-app-deps",
+    "preelectron-pack": "yarn build",
+    "electron-pack": "electron-builder build -mw",
     "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "build": "rescripts build",
+    "test": "rescripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -30,5 +64,14 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@rescripts/cli": "^0.0.14",
+    "@rescripts/rescript-env": "^0.0.12",
+    "concurrently": "^5.1.0",
+    "electron": "^8.2.1",
+    "electron-builder": "^22.4.1",
+    "typescript": "^3.8.3",
+    "wait-on": "^4.0.1"
   }
 }

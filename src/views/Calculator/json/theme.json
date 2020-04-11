@@ -1,0 +1,12 @@
+{
+  "light": {
+    "backgroundColor": "white",
+    "text": "black",
+    "boxShadow": "#00000044"
+  },
+  "dark": {
+    "backgroundColor": "black",
+    "text": "white",
+    "boxShadow": "#ffffff55"
+  }
+}
