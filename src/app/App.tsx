@@ -8,7 +8,7 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
   body {
-    @media (prefers-color-scheme: light) {
+    @media (prefers-color-scheme: dark) {
       background-color: black;
     }
   }
