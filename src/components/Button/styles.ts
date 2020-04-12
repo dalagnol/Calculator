@@ -26,18 +26,18 @@ export const Button = styled.button<Props>`
     ${({ color, theme }) =>
       (color === "number" &&
         `
-        background-color: ${theme.button?.number};
-        color: ${theme.button?.maintext};
+        background-color: ${theme.button?.maintext};
+        color: ${theme.button?.number};
     `) ||
       (color === "main" &&
         `
-      background-color: ${theme.button?.main};
-      color: ${theme.button?.maintext};
+      background-color: ${theme.button?.maintext};
+      color: ${theme.button?.main};
       `) ||
       (color === "secondary" &&
         `
-        background-color: ${theme.button?.secondary};
-        color: ${theme.button?.secondarytext};
+        background-color: ${theme.button?.secondarytext};
+        color: ${theme.button?.secondary};
   `)}
   }
 

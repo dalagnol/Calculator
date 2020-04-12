@@ -34,13 +34,21 @@ const percentage = (x: number, y: number = 0) => {
   return r;
 };
 
-const change = (x: number) => {
-  let r = String(x);
+const change = (x: number, y: number) => {
+  let r = "";
+  if (!y) {
+    r = String(x);
+  } else {
+    r = String(y);
+  }
+
   if (r.includes("-")) {
     r = r.slice(1);
   } else {
     r = `-${r}`;
-  }
+  }  
+
+  return Number(r);
 };
 
 let operations: any = {

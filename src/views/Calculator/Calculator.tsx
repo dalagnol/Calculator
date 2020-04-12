@@ -17,6 +17,7 @@ export default function Calculator() {
   const [comma, setComma] = useState(1);
   const [row, setRow] = useState(false);
   const [newNumber, setNewNumber] = useState(false);
+  const [displayY, setDisplayY] = useState(false);
 
   const clear = () => {
     setEditing("x");
@@ -25,6 +26,7 @@ export default function Calculator() {
     setOperation("");
     setComma(1);
     setRow(false);
+    setDisplayY(false);
 
     return true;
   };
@@ -82,7 +84,12 @@ export default function Calculator() {
       setNewNumber(false);
     }
 
-    row || editing === "y" ? setY(Number(result)) : setX(Number(result));
+    if (row || editing === "y") {
+       setY(Number(result));
+       setDisplayY(true);
+      } else {
+       setX(Number(result));
+      }
 
     return result;
   };
@@ -182,7 +189,7 @@ export default function Calculator() {
   return (
     <Container>
       <Screen>
-        <Result>{editing === "x" ? prepare(x) : prepare(y)}</Result>
+        <Result>{editing === "y" && displayY ? prepare(y) : prepare(x)}</Result>
       </Screen>
       <Button color={"secondary"} position={{column: 1, row: 2}} onClick={() => clear()} onKeyUp={keyHandler}>
         C
