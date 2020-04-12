@@ -20,26 +20,7 @@ export const Button = styled.button<Props>`
   font-family: Roboto;
   font-size: 20px;
 
-  transition: all 0.2s ease-in-out
-
-  &:active {
-    ${({ color, theme }) =>
-      (color === "number" &&
-        `
-        background-color: ${theme.button?.maintext};
-        color: ${theme.button?.number};
-    `) ||
-      (color === "main" &&
-        `
-      background-color: ${theme.button?.maintext};
-      color: ${theme.button?.main};
-      `) ||
-      (color === "secondary" &&
-        `
-        background-color: ${theme.button?.secondarytext};
-        color: ${theme.button?.secondary};
-  `)}
-  }
+  transition: all 0.2s ease-in-out;
 
   ${({ color, theme }) =>
     (color === "number" &&
@@ -56,7 +37,31 @@ export const Button = styled.button<Props>`
       `
       background-color: ${theme.button?.secondary};
       color: ${theme.button?.secondarytext};
+      `) ||
+    (color === "selected" &&
+      `
+      background-color: ${theme.button?.selected};
+      color: ${theme.button?.selectedtext};
       `)}
+
+  &:active {
+    ${({ color, theme }) =>
+      (color === "number" &&
+        `
+          background-color: ${theme.button?.maintext};
+          color: ${theme.button?.number};
+        `) ||
+      (color === "main" &&
+        `
+          background-color: ${theme.button?.maintext};
+          color: ${theme.button?.main};
+        `) ||
+      (color === "secondary" &&
+        `
+          background-color: ${theme.button?.secondarytext};
+          color: ${theme.button?.secondary};
+        `)}
+  }
 
   ${({ position }) =>
     `

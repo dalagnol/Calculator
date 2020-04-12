@@ -211,7 +211,7 @@ export default function Calculator() {
         %
       </Button>
       <Button
-        color={"main"}
+        color={operation === "divide" ? "selected" : "main"}
         position={{column: 4, row: 2}}
         onClick={() => submitOperation("divide")}
         onKeyUp={keyHandler}
@@ -243,7 +243,7 @@ export default function Calculator() {
         9
       </Button>
       <Button
-        color={"main"}
+        color={operation === "multiply" ? "selected" : "main"}
         position={{column: 4, row: 3}}
         onClick={() => submitOperation("multiply")}
         onKeyUp={keyHandler}
@@ -275,7 +275,7 @@ export default function Calculator() {
         6
       </Button>
       <Button
-        color={"main"}
+        color={operation === "subtract" ? "selected" : "main"}
         position={{column: 4, row: 4}}
         onClick={() => submitOperation("subtract")}
         onKeyUp={keyHandler}
@@ -307,7 +307,7 @@ export default function Calculator() {
         3
       </Button>
       <Button
-        color={"main"}
+        color={operation === "sum" ? "selected" : "main"}
         position={{column: 4, row: 5}}
         onClick={() => submitOperation("sum")}
         onKeyUp={keyHandler}
