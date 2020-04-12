@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTheme } from "../../themes";
 import Operations from "../../operations";
 
@@ -7,7 +7,7 @@ import { Button } from "../../components";
 import { theme } from "./json";
 import { keyCodes } from "./constants";
 
-export default function Calculator() {
+export default function Calculator({ setBodyColor }: any) {
   useTheme("calculator", theme);
 
   const [editing, setEditing] = useState("x");
@@ -18,6 +18,14 @@ export default function Calculator() {
   const [row, setRow] = useState(false);
   const [newNumber, setNewNumber] = useState(false);
   const [displayY, setDisplayY] = useState(false);
+
+  useEffect(() => {
+    if (window.getComputedStyle(document.body, null).getPropertyValue("background-color") === "rgb(0, 0, 0)") {
+      setBodyColor("black");
+    } else {
+      setBodyColor("white");
+    }
+  }, [window.getComputedStyle(document.body, null).getPropertyValue("background-color")]);
 
   const clear = () => {
     setEditing("x");
