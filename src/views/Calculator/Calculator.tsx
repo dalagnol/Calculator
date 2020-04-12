@@ -5,7 +5,8 @@ import Operations from "../../operations";
 import { Container, Screen, Result } from "./styles";
 import { Button } from "../../components";
 import { theme } from "./json";
-import { keyCodes } from "./constants";
+import { keyCodes, op, keys } from "./constants";
+import { format } from "./format";
 
 export default function Calculator({ setBodyColor }: any) {
   useTheme("calculator", theme);
@@ -128,63 +129,18 @@ export default function Calculator({ setBodyColor }: any) {
     setComma(result);
   };
 
-  const prepare = (n: number) => {
-    let result = String(n);
-    
-    if (result.includes(".")) {
-      result = result.replace(".", ",");
-    }
-
-    if (n >= 1000 && n <= 9999) {
-      let part1 = result.substring(0, 1);
-      let part2 = result.substring(1);
-
-      result = `${part1}.${part2}`;
-    } else if (n >= 10000 && n <= 99999) {
-      let part1 = result.substring(0, 2);
-      let part2 = result.substring(2);
-
-      result = `${part1}.${part2}`;
-    } else if (n >= 100000 && n <= 999999) {
-      let part1 = result.substring(0, 3);
-      let part2 = result.substring(3);
-
-      result = `${part1}.${part2}`;
-    } else if (n >= 1000000 && n <= 9999999) {
-      let part1 = result.substring(0, 1);
-      let part2 = result.substring(1, 4);
-      let part3 = result.substring(4);
-
-      result = `${part1}.${part2}.${part3}`;
-    } else if (n >= 10000000 && n <= 99999999) {
-      let part1 = result.substring(0, 2);
-      let part2 = result.substring(2, 5);
-      let part3 = result.substring(5);
-
-      result = `${part1}.${part2}.${part3}`;
-    } else if (n >= 100000000 && n <= 999999999) {
-      let part1 = result.substring(0, 3);
-      let part2 = result.substring(3, 6);
-      let part3 = result.substring(6);
-
-      result = `${part1}.${part2}.${part3}`;
-    };
-
-    return result;
-  };
-
   const keyHandler = (e: any) => {
     if (e.keyCode >= 48 && e.keyCode <= 57) {
       submitNumber(keyCodes[e.keyCode]);
     } else if (e.keyCode === 188 || e.keyCode === 190) {
       submitComma();
-    } else if (e.keyCode === 189 || e.keyCode === 170 || e.keyCode === 191) {
+    } else if (e.keyCode === 189 || e.keyCode === 191) {
       submitOperation(keyCodes[e.keyCode])
     } else if (e.shiftKey && e.keyCode === 187) {
       submitOperation("sum");
     } else if (e.shiftKey && e.keyCode === 56) {
       submitOperation("multiply");
-    } else if (e.keyCode === 187 || e.keyCode === 13) {
+    } else if (e.keyCode === 13 || e.keyCode === 187) {
       operateTwoNumbers(x, y, operation);
       setEditing("x");
     } else if (e.keyCode === 27 || e.keyCode === 67) {
@@ -194,11 +150,49 @@ export default function Calculator({ setBodyColor }: any) {
       editing === "x" ? setX(res) : setY(res);
     }
   }
+
+  const Buttons = () => {
+    const result = [];
+    let i = 0;
+
+    for (let row = 2; row < 7; row++) {
+      for (let column = 1; column < 5; column++) {
+        let zero = false;
+
+        if (keys[i].content === "0") {
+          zero = true;
+        }
+
+        let [content, code, shift] = keys[i];
+        i++;
+
+        result.push(
+          <Button 
+          position={{column, row, zero}} 
+          color={row === 2 && column < 4 ? 
+          "secondary" 
+          : column === 4 && operation === op[column] ? 
+          "selected" 
+          : column === 4 ? 
+          "main" 
+          : "number"}
+          >
+          {content}
+          </Button>
+        );
+
+        if (zero) {
+          column++;
+          zero = false;
+        }
+      }
+    }
+  }
     
   return (
     <Container>
       <Screen>
-        <Result>{editing === "y" && displayY ? prepare(y) : prepare(x)}</Result>
+        <Result>{editing === "y" && displayY ? format(y) : format(x)}</Result>
       </Screen>
       <Button color={"secondary"} position={{column: 1, row: 2}} onClick={() => clear()} onKeyUp={keyHandler}>
         C
