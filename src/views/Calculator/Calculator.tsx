@@ -181,10 +181,11 @@ export default function Calculator() {
       setEditing("x");
     } else if (e.keyCode === 27 || e.keyCode === 67) {
       clear();
+    } else if (e.keyCode === 8) {
+      const res = keyCodes[e.keyCode](editing === "x" ? x : y);
+      editing === "x" ? setX(res) : setY(res);
     }
   }
-
-  console.log(x, y, operation);
     
   return (
     <Container>
