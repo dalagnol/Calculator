@@ -2,9 +2,8 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   background-color: ${({ theme }) => theme.calculator?.backgroundColor};
-  @media (prefers-color-scheme: dark) {
-
-  }
+  
+  -webkit-app-region: drag;
   
   width: 235px;
   height: 335px;
