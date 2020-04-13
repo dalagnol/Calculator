@@ -21,8 +21,7 @@ const locale: {
   },
 };
 
-const localised: { [y in spot]: character } =
-  locale[(process.argv[3] as flag) || "en"];
+const localised: { [y in spot]: character } = locale["en"];
 
 export function format(x: number | string) {
   x = String(x);
