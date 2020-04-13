@@ -43,7 +43,6 @@ export const keyCodes: {
   55: 7,
   56: 8,
   57: 9,
-  170: "multiply",
   187: "operate",
   189: "subtract",
   191: "divide",

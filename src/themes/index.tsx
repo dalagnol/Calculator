@@ -16,7 +16,7 @@ export { DevTools } from "./DevTools/DevTools";
 
 const LS_DevTools = "theme_devtools";
 
-export const Themed = observer(({ children }: any) => {
+export const Themed = observer(({ bodyColor, children }: any) => {
   const [Themes, setThemes]: any = useState({});
   const [DevTools, SetDevTools] = useState(Load(LS_DevTools));
   const [Theme, setTheme] = useState<palette>(
@@ -170,11 +170,13 @@ export const Themed = observer(({ children }: any) => {
 
   useEffect(
     useCallback(() => {
-      if (window.getComputedStyle(document.body, null).getPropertyValue("background-color") === "rgb(0, 0, 0)") {
+      if (bodyColor === "black") {
         setTheme("dark");
+      } else {
+        setTheme("light");
       };
-    }, [setTheme]),
-    [setTheme]
+    }, [bodyColor, setTheme]),
+      [bodyColor, setTheme]
   );
 
   return (
