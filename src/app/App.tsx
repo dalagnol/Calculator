@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { Calculator } from "../views";
 
@@ -15,11 +15,10 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 export const App = () => {
-  const [bodyColor, setBodyColor] = useState("");
   return (
-    <Themed bodyColor={bodyColor}>
+    <Themed>
       <GlobalStyle />
-      <Calculator setBodyColor={setBodyColor} />
+      <Calculator />
     </Themed>
   );
 };

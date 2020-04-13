@@ -15,7 +15,6 @@ import { Button } from "../../components";
 import { theme } from "./json";
 
 import {
-  keyCodes,
   format as formatted,
   table,
   opcodes,
@@ -24,7 +23,7 @@ import {
   e as event,
 } from "./constants";
 
-export default function Calculator({ setBodyColor }: any) {
+export default function Calculator() {
   const { Use } = useTheme("calculator", theme);
   const ref: any = useRef(null);
 
@@ -190,9 +189,15 @@ export default function Calculator({ setBodyColor }: any) {
     191() {
       submitOperation("divide");
     },
-    8(e: any) {
-      const res = keyCodes[e.keyCode](editing === "x" ? x : y);
-      editing === "x" ? setX(res) : setY(res);
+    8() {
+      const vars: { [x: string]: number } = { x, y };
+      const setters: { [y: string]: Function } = { x: setX, y: setY };
+
+      setters[editing](
+        Number(
+          String(vars[editing]).substring(0, String(vars[editing]).length - 1)
+        )
+      );
     },
     187(e: any) {
       if (e.shiftKey) {

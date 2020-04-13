@@ -168,17 +168,6 @@ export const Themed = observer(({ bodyColor, children }: any) => {
     [DevTools]
   );
 
-  useEffect(
-    useCallback(() => {
-      if (bodyColor === "black") {
-        setTheme("dark");
-      } else {
-        setTheme("light");
-      };
-    }, [bodyColor, setTheme]),
-      [bodyColor, setTheme]
-  );
-
   return (
     <ThemeProvider
       theme={{
