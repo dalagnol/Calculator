@@ -8,7 +8,7 @@ import Log from "./Log";
 
 import { themes } from "./json";
 
-import "./styles/fonts.scss";
+import "./styles/fonts.css";
 import "./styles/animations";
 
 export { useTheme } from "./useTheme";
@@ -16,7 +16,7 @@ export { DevTools } from "./DevTools/DevTools";
 
 const LS_DevTools = "theme_devtools";
 
-export const Themed = observer(({ bodyColor, children }: any) => {
+export const Themed = observer(({ children }: any) => {
   const [Themes, setThemes]: any = useState({});
   const [DevTools, SetDevTools] = useState(Load(LS_DevTools));
   const [Theme, setTheme] = useState<palette>(

@@ -9,6 +9,7 @@ import React, {
 import { useTheme } from "../../themes";
 
 import Operations from "../../operations";
+import copy from "../../helpers/copy";
 
 import { Container, Screen, Result } from "./styles";
 import { Button } from "../../components";
@@ -114,7 +115,7 @@ export default function Calculator() {
       if (comma === 2) {
         result = result.concat(`.${value}`);
         setComma(0);
-      } else if (result.length < 9) {
+      } else {
         result = result.concat(value);
         setNewNumber(false);
       }
@@ -157,11 +158,22 @@ export default function Calculator() {
     setComma(result);
   };
 
+  const display = useMemo(
+    () => (editing === "y" && displayY ? formatted(y) : formatted(x)),
+    [displayY, editing, x, y]
+  );
+
   const handlers: { [x: number]: Function } = {
     188: submitComma,
     190: submitComma,
     27: clear,
-    67: clear,
+    67(e: any) {
+      if (e.metaKey || e.ctrlKey) {
+        copy(display);
+      } else {
+        clear();
+      }
+    },
     13() {
       operateTwoNumbers(x, y, operation);
       setEditing("x");
@@ -211,14 +223,18 @@ export default function Calculator() {
   };
 
   const handle = useCallback(
-    (e: any) => {
-      if (handlers[e.keyCode] || numberWithoutShift(e)) {
-        setPressed((e.shiftKey ? 500 : 1) * e.keyCode);
+    (e: any, click = false) => {
+      if (!e.metaKey && !e.ctrlKey) {
+        if (handlers[e.keyCode] || numberWithoutShift(e)) {
+          if (!click) {
+            setPressed((e.shiftKey ? 500 : 1) * e.keyCode);
+          }
 
-        if (handlers[e.keyCode]) {
-          handlers[e.keyCode](e);
-        } else if (numberWithoutShift(e)) {
-          submitNumber(table.find(byKeycode(e.keyCode))[0]);
+          if (handlers[e.keyCode]) {
+            handlers[e.keyCode](e);
+          } else if (numberWithoutShift(e)) {
+            submitNumber(table.find(byKeycode(e.keyCode))[0]);
+          }
         }
       }
     },
@@ -261,7 +277,7 @@ export default function Calculator() {
                   : "number"
               }
               position={{ column, row, zero }}
-              onClick={() => handle(event(code, shift))}
+              onClick={() => handle(event(code, shift), true)}
               pressed={pressed === (shift ? code * 500 : code)}
             >
               {key}
@@ -281,9 +297,7 @@ export default function Calculator() {
   return (
     <Container>
       <Screen>
-        <Result>
-          {editing === "y" && displayY ? formatted(y) : formatted(x)}
-        </Result>
+        <Result>{display}</Result>
       </Screen>
       <input
         ref={ref}
@@ -293,6 +307,7 @@ export default function Calculator() {
         onBlur={() => ref.current?.focus()}
         onKeyDown={handle}
         onKeyUp={() => setPressed(0)}
+        value={display}
       />
       {Buttons}
     </Container>

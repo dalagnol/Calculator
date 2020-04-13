@@ -18,9 +18,9 @@ const menuTemplate = [
       { role: "hideothers" },
       { role: "unhide" },
       { type: "separator" },
-      { role: "quit" }
-    ]
-  }
+      { role: "quit" },
+    ],
+  },
 ];
 
 const menu = Menu.buildFromTemplate(menuTemplate);
@@ -34,13 +34,15 @@ function createWindow() {
     resizable: false,
     titleBarStyle: "hidden",
     title: "Abacus",
-    maximizable: false
+    maximizable: false,
   });
   mainWindow.loadURL(
     isDev
       ? "http://localhost:3000"
       : `file://${path.join(__dirname, "../build/index.html")}`
   );
+
+  mainWindow.webContents.openDevTools();
   mainWindow.on("closed", () => (mainWindow = null));
 }
 

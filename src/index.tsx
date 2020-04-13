@@ -3,8 +3,8 @@ import ReactDOM from "react-dom";
 
 import { App } from "./app/App";
 
-import "./styles/standard.scss";
-import "./styles/fonts.scss";
+import "./styles/standard.css";
+import "./styles/fonts.css";
 
 import * as serviceWorker from "./serviceWorker";
 
