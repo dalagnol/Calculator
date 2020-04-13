@@ -1,6 +1,13 @@
-import React, { useState, useRef, useCallback, useMemo } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  useMemo,
+} from "react";
 
 import { useTheme } from "../../themes";
+
 import Operations from "../../operations";
 
 import { Container, Screen, Result } from "./styles";
@@ -18,7 +25,7 @@ import {
 } from "./constants";
 
 export default function Calculator({ setBodyColor }: any) {
-  useTheme("calculator", theme);
+  const { Use } = useTheme("calculator", theme);
   const ref: any = useRef(null);
 
   const [editing, setEditing] = useState("x");
@@ -30,13 +37,21 @@ export default function Calculator({ setBodyColor }: any) {
   const [newNumber, setNewNumber] = useState(false);
   const [displayY, setDisplayY] = useState(false);
 
-  useEffect(() => {
-    if (window.getComputedStyle(document.body, null).getPropertyValue("background-color") === "rgb(0, 0, 0)") {
-      setBodyColor("black");
-    } else {
-      setBodyColor("white");
-    }
-  }, [window.getComputedStyle(document.body, null).getPropertyValue("background-color")]);
+  useEffect(
+    useCallback(() => {
+      setInterval(() => {
+        const Theme =
+          window
+            .getComputedStyle(document.body, null)
+            .getPropertyValue("background-color") === "rgb(0, 0, 0)"
+            ? "dark"
+            : "light";
+
+        Use(Theme);
+      }, 1000);
+    }, [Use]),
+    []
+  );
 
   const clear = () => {
     setEditing("x");
@@ -141,7 +156,7 @@ export default function Calculator({ setBodyColor }: any) {
 
     setComma(result);
   };
-  
+
   const handlers: { [x: number]: Function } = {
     188: submitComma,
     190: submitComma,
