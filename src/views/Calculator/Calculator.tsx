@@ -5,7 +5,16 @@ import Operations from "../../operations";
 import { Container, Screen, Result } from "./styles";
 import { Button } from "../../components";
 import { theme } from "./json";
-import { keyCodes, format as formatted, table, opcodes } from "./constants";
+
+import {
+  keyCodes,
+  format as formatted,
+  table,
+  opcodes,
+  byKeycode,
+  numberWithoutShift,
+  e as event,
+} from "./constants";
 
 export default function Calculator() {
   useTheme("calculator", theme);
@@ -175,14 +184,12 @@ export default function Calculator() {
     (e: any) => {
       if (handlers[e.keyCode]) {
         handlers[e.keyCode](e);
-      } else if (e.keyCode >= 48 && e.keyCode <= 57 && !e.shiftKey) {
-        submitNumber(keyCodes[e.keyCode]);
+      } else if (numberWithoutShift(e)) {
+        submitNumber(table.find(byKeycode(e.keyCode))[0]);
       }
     },
     [handlers, submitNumber]
   );
-
-  const e = (keyCode: number, shiftKey = false) => ({ keyCode, shiftKey });
 
   const Buttons = useMemo(() => {
     const result = [];
@@ -220,7 +227,7 @@ export default function Calculator() {
                   : "number"
               }
               position={{ column, row, zero }}
-              onClick={() => handle(e(code, shift))}
+              onClick={() => handle(event(code, shift))}
             >
               {key}
             </Button>
@@ -246,6 +253,7 @@ export default function Calculator() {
       <input
         ref={ref}
         autoFocus={true}
+        readOnly={true}
         style={{ opacity: 0 }}
         onBlur={() => ref.current?.focus()}
         onKeyDown={handle}

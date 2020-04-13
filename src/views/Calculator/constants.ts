@@ -96,3 +96,11 @@ export const table: any = [
   [",", 190],
   ["=", 187],
 ];
+
+export const byKeycode = (keyCode: number) => (entry: any) =>
+  entry[1] === keyCode;
+
+export const numberWithoutShift = ({ keyCode, shiftKey }: any) =>
+  keyCode >= 48 && keyCode <= 57 && !shiftKey;
+
+export const e = (keyCode: number, shiftKey = false) => ({ keyCode, shiftKey });
