@@ -4,16 +4,36 @@ import { useTheme } from "../../themes";
 import { Button as Element } from "./styles";
 import { theme } from "./json";
 
+interface Props {
+  children: string;
+  color: string;
+  position: { row: number; column: number; zero?: boolean };
+  pressed: boolean;
+  onClick: (e: any) => void;
+  onKeyDown?: (e: any) => void;
+  onKeyUp?: (e: any) => void;
+}
+
 export default function Button({
   children,
   color,
   position,
-  ...props
-}: any) {
+  pressed,
+  onClick,
+  onKeyDown,
+  onKeyUp,
+}: Props) {
   useTheme("button", theme);
 
   return (
-    <Element color={color} position={position} {...props}>
+    <Element
+      color={color}
+      position={position}
+      pressed={pressed}
+      onKeyDown={onKeyDown}
+      onKeyUp={onKeyUp}
+      onClick={onClick}
+    >
       {children}
     </Element>
   );

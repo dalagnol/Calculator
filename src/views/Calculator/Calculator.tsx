@@ -35,6 +35,7 @@ export default function Calculator() {
   const [row, setRow] = useState(false);
   const [newNumber, setNewNumber] = useState(false);
   const [displayY, setDisplayY] = useState(false);
+  const [pressed, setPressed] = useState<number>(0);
 
   useEffect(
     useCallback(() => {
@@ -211,10 +212,14 @@ export default function Calculator() {
 
   const handle = useCallback(
     (e: any) => {
-      if (handlers[e.keyCode]) {
-        handlers[e.keyCode](e);
-      } else if (numberWithoutShift(e)) {
-        submitNumber(table.find(byKeycode(e.keyCode))[0]);
+      if (handlers[e.keyCode] || numberWithoutShift(e)) {
+        setPressed((e.shiftKey ? 500 : 1) * e.keyCode);
+
+        if (handlers[e.keyCode]) {
+          handlers[e.keyCode](e);
+        } else if (numberWithoutShift(e)) {
+          submitNumber(table.find(byKeycode(e.keyCode))[0]);
+        }
       }
     },
     [handlers, submitNumber]
@@ -257,6 +262,7 @@ export default function Calculator() {
               }
               position={{ column, row, zero }}
               onClick={() => handle(event(code, shift))}
+              pressed={pressed === (shift ? code * 500 : code)}
             >
               {key}
             </Button>
@@ -270,7 +276,7 @@ export default function Calculator() {
     }
 
     return result;
-  }, [operation, handle]);
+  }, [operation, handle, pressed]);
 
   return (
     <Container>
@@ -286,6 +292,7 @@ export default function Calculator() {
         style={{ opacity: 0 }}
         onBlur={() => ref.current?.focus()}
         onKeyDown={handle}
+        onKeyUp={() => setPressed(0)}
       />
       {Buttons}
     </Container>

@@ -2,9 +2,8 @@ import styled from "styled-components";
 
 interface Props {
   color: string;
-  position: any;
-  column: number;
-  row: number;
+  position: { row: number; column: number; zero?: boolean };
+  pressed: boolean;
 }
 
 export const Button = styled.button<Props>`
@@ -72,4 +71,12 @@ export const Button = styled.button<Props>`
         grid-row-start: ${position.row * 2};
         grid-row-end: ${position.row * 2 + 1};
       `}
+
+  ${({ theme, pressed }) =>
+    pressed &&
+    `
+    transition: all 0.1s ease-in-out;
+    background-color: ${theme.button?.maintext};
+        color: ${theme.button?.secondarytext};
+  `}
 `;
