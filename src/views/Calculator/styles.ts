@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+const rowMargin = navigator?.userAgent?.toLowerCase().includes("macintosh")
+  ? "20px"
+  : "13px";
+
 export const Container = styled.div`
   @media (prefers-color-scheme: dark) {
     body {
@@ -11,13 +15,13 @@ export const Container = styled.div`
 
   -webkit-app-region: drag;
 
-  width: 235px;
-  height: 335px;
+  width: 100%;
+  height: 100%;
 
   display: grid;
 
   grid-template-columns: 15px 40px 15px 40px 15px 40px 15px 40px 15px;
-  grid-template-rows: 15px 35px 15px 40px 15px 40px 15px 40px 15px 40px 15px 40px 15px;
+  grid-template-rows: 15px 35px ${rowMargin} 40px ${rowMargin} 40px ${rowMargin} 40px ${rowMargin} 40px ${rowMargin} 40px ${rowMargin};
 `;
 
 export const Screen = styled.div`

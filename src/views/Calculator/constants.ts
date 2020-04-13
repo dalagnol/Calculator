@@ -74,6 +74,9 @@ export const table: any = [
 export const byKeycode = (keyCode: number) => (entry: any) =>
   entry[1] === keyCode;
 
+export const byKeyLabel = (byKeyLabel: string) => (entry: any) =>
+  entry[0] === byKeyLabel;
+
 export const numberWithoutShift = ({ keyCode, shiftKey }: any) =>
   keyCode >= 48 && keyCode <= 57 && !shiftKey;
 

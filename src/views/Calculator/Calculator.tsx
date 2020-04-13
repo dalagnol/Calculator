@@ -9,7 +9,6 @@ import React, {
 import { useTheme } from "../../themes";
 
 import Operations from "../../operations";
-import copy from "../../helpers/copy";
 
 import { Container, Screen, Result } from "./styles";
 import { Button } from "../../components";
@@ -20,6 +19,7 @@ import {
   table,
   opcodes,
   byKeycode,
+  byKeyLabel,
   numberWithoutShift,
   e as event,
 } from "./constants";
@@ -158,6 +158,17 @@ export default function Calculator() {
     setComma(result);
   };
 
+  const backspace = () => {
+    const vars: { [x: string]: number } = { x, y };
+    const setters: { [y: string]: Function } = { x: setX, y: setY };
+
+    setters[editing](
+      Number(
+        String(vars[editing]).substring(0, String(vars[editing]).length - 1)
+      )
+    );
+  };
+
   const display = useMemo(
     () => (editing === "y" && displayY ? formatted(y) : formatted(x)),
     [displayY, editing, x, y]
@@ -167,13 +178,8 @@ export default function Calculator() {
     188: submitComma,
     190: submitComma,
     27: clear,
-    67(e: any) {
-      if (e.metaKey || e.ctrlKey) {
-        copy(display);
-      } else {
-        clear();
-      }
-    },
+    67: clear,
+    8: backspace,
     13() {
       operateTwoNumbers(x, y, operation);
       setEditing("x");
@@ -201,16 +207,6 @@ export default function Calculator() {
     },
     191() {
       submitOperation("divide");
-    },
-    8() {
-      const vars: { [x: string]: number } = { x, y };
-      const setters: { [y: string]: Function } = { x: setX, y: setY };
-
-      setters[editing](
-        Number(
-          String(vars[editing]).substring(0, String(vars[editing]).length - 1)
-        )
-      );
     },
     187(e: any) {
       if (e.shiftKey) {
@@ -294,6 +290,8 @@ export default function Calculator() {
     return result;
   }, [operation, handle, pressed]);
 
+  ref.current?.select();
+
   return (
     <Container>
       <Screen>
@@ -308,6 +306,12 @@ export default function Calculator() {
         onKeyDown={handle}
         onKeyUp={() => setPressed(0)}
         value={display}
+        onPaste={(e: any) => {
+          let data = e.clipboardData.getData("text");
+
+          if (String(Number(data)) === String(data)) {
+          }
+        }}
       />
       {Buttons}
     </Container>

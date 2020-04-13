@@ -21,6 +21,33 @@ const menuTemplate = [
       { role: "quit" },
     ],
   },
+  {
+    label: "File",
+    submenu: [{ role: "close" }, { role: "minimize" }],
+  },
+  {
+    label: "Edit",
+    submenu: [{ role: "copy" }, { role: "paste" }],
+  },
+  {
+    label: "View",
+    submenu: [
+      { type: "radio", label: "Elementary", enabled: true, checked: true },
+      { type: "radio", label: "Scientific", enabled: false, checked: false },
+      { type: "radio", label: "Programmer", enabled: false, checked: false },
+      { type: "separator" },
+      {
+        type: "normal",
+        label: "Show thousand separators",
+        enabled: false,
+        checked: true,
+      },
+    ],
+  },
+  {
+    label: "Help",
+    submenu: [{ type: "normal", label: "You are on your own" }],
+  },
 ];
 
 const menu = Menu.buildFromTemplate(menuTemplate);
@@ -29,8 +56,8 @@ Menu.setApplicationMenu(menu);
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 245,
-    height: 355,
+    width: 255,
+    height: 380,
     resizable: false,
     titleBarStyle: "hidden",
     title: "Abacus",
@@ -42,15 +69,14 @@ function createWindow() {
       : `file://${path.join(__dirname, "../build/index.html")}`
   );
 
+  mainWindow.removeMenu();
   mainWindow.on("closed", () => (mainWindow = null));
 }
 
 app.on("ready", createWindow);
 
 app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
-    app.quit();
-  }
+  app.quit();
 });
 
 app.on("activate", () => {

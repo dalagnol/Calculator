@@ -8,6 +8,8 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
   body {
+    overflow: hidden;
+
     @media (prefers-color-scheme: dark) {
       background-color: black;
     }
