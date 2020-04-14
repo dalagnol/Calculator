@@ -43,6 +43,7 @@
     "postinstall": "electron-builder install-app-deps",
     "preelectron-pack": "yarn build",
     "electron-pack": "electron-builder build -mw",
+    "compile": "yarn electron-pack",
     "start": "react-scripts start",
     "build": "rescripts build",
     "test": "rescripts test",

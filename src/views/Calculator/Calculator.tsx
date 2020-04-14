@@ -3,7 +3,7 @@ import React, {
   useEffect,
   useRef,
   useCallback,
-  useMemo
+  useMemo,
 } from "react";
 
 import { useTheme } from "../../themes";
@@ -20,7 +20,7 @@ import {
   opcodes,
   byKeycode,
   numberWithoutShift,
-  e as event
+  e as event,
 } from "./constants";
 
 export default function Calculator() {
@@ -214,7 +214,7 @@ export default function Calculator() {
         operateTwoNumbers(x, y, operation);
         setEditing("x");
       }
-    }
+    },
   };
 
   const handle = useCallback(
@@ -310,6 +310,9 @@ export default function Calculator() {
 
           if (String(Number(data)) === String(data)) {
             editing === "x" ? setX(Number(data)) : setY(Number(data));
+            if (editing === "y") {
+              setDisplayY(true);
+            }
           }
         }}
       />
