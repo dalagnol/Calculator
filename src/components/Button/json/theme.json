@@ -3,10 +3,10 @@
     "number": "#eaeaea",
     "main": "#FF6ABD",
     "secondary": "#7e7e7e",
-    "selected": "black",
+    "selected": "pink",
     "maintext": "black",
     "secondarytext": "white",
-    "selectedtext": "#FF6ABD"
+    "selectedtext": "white"
   },
   "dark": {
     "number": "#7e7e7e",

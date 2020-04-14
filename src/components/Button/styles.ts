@@ -53,7 +53,7 @@ export const Button = styled.button<Props>`
       (color === "main" &&
         `
           background-color: ${theme.button?.maintext};
-          color: ${theme.button?.main};
+          color: ${theme.button?.secondarytext};
         `) ||
       (color === "secondary" &&
         `
