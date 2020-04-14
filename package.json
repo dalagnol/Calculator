@@ -7,7 +7,7 @@
     "email": "jdk.public@icloud.com"
   },
   "build": {
-    "appId": "com.klebanowycz.abacus",
+    "appId": "com.klebanowycz.Abacus",
     "productName": "Abacus",
     "copyright": "Copyright © 2020 ${author}",
     "mac": {
