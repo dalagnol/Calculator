@@ -4,8 +4,7 @@
   "private": true,
   "author": {
     "name": "Julia Klebanowycz",
-    "email": "jdk.public@icloud.com",
-    "url": "http://localhost:3000"
+    "email": "jdk.public@icloud.com"
   },
   "build": {
     "appId": "com.klebanowycz.abacus",
