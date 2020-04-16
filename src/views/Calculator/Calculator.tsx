@@ -43,7 +43,7 @@ export default function Calculator() {
         const Theme =
           window
             .getComputedStyle(document.body, null)
-            .getPropertyValue("background-color") === "rgb(0, 0, 0)"
+            .getPropertyValue("background").includes("rgb(64, 36, 0)")
             ? "dark"
             : "light";
 

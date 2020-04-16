@@ -1,11 +1,11 @@
 {
   "light": {
-    "backgroundColor": "white",
-    "text": "black",
+    "background": "linear-gradient(#CE9143, #CB9D62)",
+    "text": "white",
     "boxShadow": "#00000044"
   },
   "dark": {
-    "backgroundColor": "black",
+    "background": "linear-gradient(#402400, #573100)",
     "text": "white",
     "boxShadow": "#ffffff55"
   }

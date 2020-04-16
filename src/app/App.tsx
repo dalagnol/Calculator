@@ -11,7 +11,10 @@ const GlobalStyle = createGlobalStyle`
     overflow: hidden;
 
     @media (prefers-color-scheme: dark) {
-      background-color: black;
+      background: linear-gradient(#402400, #573100);
+    }
+    @media (prefers-color-scheme: light) {
+      background: linear-gradient(#CE9143, #CB9D62);
     }
   }
 `;

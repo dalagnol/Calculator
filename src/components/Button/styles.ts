@@ -24,22 +24,22 @@ export const Button = styled.button<Props>`
   ${({ color, theme }) =>
     (color === "number" &&
       `
-      background-color: ${theme.button?.number};
-      color: ${theme.button?.maintext};
+      background: radial-gradient(circle, ${theme.button?.lightnumber}, ${theme.button?.darknumber});
+      color: ${theme.button?.text};
       `) ||
     (color === "main" &&
       `
-      background-color: ${theme.button?.main};
-      color: ${theme.button?.maintext};
+      background: radial-gradient(circle, ${theme.button?.lightmain}, ${theme.button?.darkmain});
+      color: ${theme.button?.text};
       `) ||
     (color === "secondary" &&
       `
-      background-color: ${theme.button?.secondary};
-      color: ${theme.button?.secondarytext};
+      background: radial-gradient(circle, ${theme.button?.lightsecondary}, ${theme.button?.darksecondary});
+      color: ${theme.button?.text};
       `) ||
     (color === "selected" &&
       `
-      background-color: ${theme.button?.selected};
+      background: radial-gradient(circle, ${theme.button?.lightselected}, ${theme.button?.darkselected});
       color: ${theme.button?.selectedtext};
       `)}
 
@@ -47,18 +47,15 @@ export const Button = styled.button<Props>`
     ${({ color, theme }) =>
       (color === "number" &&
         `
-          background-color: ${theme.button?.maintext};
-          color: ${theme.button?.number};
+        background: radial-gradient(circle, ${theme.button?.darknumber}, ${theme.button?.lightnumber});
         `) ||
       (color === "main" &&
         `
-          background-color: ${theme.button?.maintext};
-          color: ${theme.button?.secondarytext};
+        background: radial-gradient(circle, ${theme.button?.darkmain}, ${theme.button?.lightmain});
         `) ||
       (color === "secondary" &&
         `
-          background-color: ${theme.button?.secondarytext};
-          color: ${theme.button?.secondary};
+        background: radial-gradient(circle, ${theme.button?.darksecondary}, ${theme.button?.lightsecondary});
         `)}
   }
 

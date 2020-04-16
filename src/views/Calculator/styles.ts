@@ -11,12 +11,14 @@ export const Container = styled.div`
     }
   }
 
-  background-color: ${({ theme }) => theme.calculator?.backgroundColor};
+  background: ${({ theme }) => theme.calculator?.background};
 
   -webkit-app-region: drag;
 
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
+
+  margin: 0;
 
   display: grid;
 
@@ -27,8 +29,6 @@ export const Container = styled.div`
 export const Screen = styled.div`
   display: flex;
   justify-content: flex-end;
-
-  background-color: ${({ theme }) => theme.calculator?.backgroundColor};
 
   grid-column-start: 2;
   grid-column-end: 9;
