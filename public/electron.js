@@ -18,20 +18,28 @@ const menuTemplate = [
       { role: "hideothers" },
       { role: "unhide" },
       { type: "separator" },
-      { role: "quit" },
-    ],
+      { role: "quit" }
+    ]
   },
   {
     label: "File",
-    submenu: [{ role: "close" }, { role: "minimize" }],
+    submenu: [{ role: "close" }, { role: "minimize" }]
   },
   {
     label: "Edit",
-    submenu: [{ role: "copy" }, { role: "paste" }],
+    submenu: [{ role: "copy" }, { role: "paste" }]
   },
   {
     label: "View",
     submenu: [
+      {
+        label: "Themes",
+        submenu: [
+          { type: "radio", label: "Light", enabled: true, checked: true },
+          { type: "radio", label: "Dark", enabled: false, checked: false },
+          { type: "radio", label: "Girly", enabled: false, checked: false }
+        ]
+      },
       { type: "radio", label: "Elementary", enabled: true, checked: true },
       { type: "radio", label: "Scientific", enabled: false, checked: false },
       { type: "radio", label: "Programmer", enabled: false, checked: false },
@@ -40,14 +48,14 @@ const menuTemplate = [
         type: "normal",
         label: "Show thousand separators",
         enabled: false,
-        checked: true,
-      },
-    ],
+        checked: true
+      }
+    ]
   },
   {
     label: "Help",
-    submenu: [{ type: "normal", label: "You are on your own" }],
-  },
+    submenu: [{ type: "normal", label: "You are on your own" }]
+  }
 ];
 
 const menu = Menu.buildFromTemplate(menuTemplate);
@@ -61,7 +69,7 @@ function createWindow() {
     resizable: false,
     titleBarStyle: "hidden",
     title: "Abacus",
-    maximizable: false,
+    maximizable: false
   });
   mainWindow.loadURL(
     isDev
