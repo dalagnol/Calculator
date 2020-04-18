@@ -6,6 +6,9 @@ import { Themed } from "../themes";
 
 import { createGlobalStyle } from "styled-components";
 
+const electron = window.require("electron");
+const ipcRenderer = electron.ipcRenderer;
+
 const GlobalStyle = createGlobalStyle`
   body {
     overflow: hidden;

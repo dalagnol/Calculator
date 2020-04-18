@@ -1,5 +1,5 @@
 const electron = require("electron");
-const { app, BrowserWindow, Menu } = electron;
+const { app, BrowserWindow, Menu, ipcMain } = electron;
 
 const path = require("path");
 const isDev = require("electron-is-dev");
@@ -69,6 +69,9 @@ function createWindow() {
     resizable: false,
     titleBarStyle: "hidden",
     title: "Abacus",
+    webPreferences: {
+      nodeIntegration: true,
+    },
     maximizable: false
   });
   mainWindow.loadURL(
@@ -79,6 +82,9 @@ function createWindow() {
 
   mainWindow.removeMenu();
   mainWindow.on("closed", () => (mainWindow = null));
+  setTimeout(() => {
+    mainWindow.webContents.send("darkMode", "adimo");
+  }, 60000);
 }
 
 app.on("ready", createWindow);
