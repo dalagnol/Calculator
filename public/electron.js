@@ -32,17 +32,34 @@ const menuTemplate = [
   {
     label: "View",
     submenu: [
-      {
-        label: "Themes",
-        submenu: [
-          { type: "radio", label: "Light", enabled: true, checked: true },
-          { type: "radio", label: "Dark", enabled: false, checked: false },
-          { type: "radio", label: "Girly", enabled: false, checked: false }
-        ]
-      },
       { type: "radio", label: "Elementary", enabled: true, checked: true },
       { type: "radio", label: "Scientific", enabled: false, checked: false },
       { type: "radio", label: "Programmer", enabled: false, checked: false },
+      { type: "separator" },
+      {
+        label: "Themes",
+        submenu: [
+          {
+            type: "radio",
+            label: "Light",
+            enabled: true,
+            checked: true,
+            click() {
+              mainWindow.webContents.send("theme", "Light");
+            }
+          },
+          {
+            type: "radio",
+            label: "Dark",
+            enabled: true,
+            checked: false,
+            click() {
+              mainWindow.webContents.send("theme", "Dark");
+            }
+          },
+          { type: "radio", label: "Automatic", enabled: true, checked: false }
+        ]
+      },
       { type: "separator" },
       {
         type: "normal",
@@ -60,6 +77,8 @@ const menuTemplate = [
 
 const menu = Menu.buildFromTemplate(menuTemplate);
 
+const byLabel = (byLabel, label) => entry => entry[label] === byLabel;
+
 Menu.setApplicationMenu(menu);
 
 function createWindow() {
@@ -70,7 +89,7 @@ function createWindow() {
     titleBarStyle: "hidden",
     title: "Abacus",
     webPreferences: {
-      nodeIntegration: true,
+      nodeIntegration: true
     },
     maximizable: false
   });
@@ -83,8 +102,14 @@ function createWindow() {
   mainWindow.removeMenu();
   mainWindow.on("closed", () => (mainWindow = null));
   setTimeout(() => {
-    mainWindow.webContents.send("darkMode", "adimo");
-  }, 60000);
+    mainWindow.webContents.send(
+      "theme",
+      menuTemplate
+        .find(byLabel("View", "label"))
+        .submenu.find(byLabel("Themes", "label"))
+        .submenu.find(byLabel(true, "checked")).label
+    );
+  }, 20000);
 }
 
 app.on("ready", createWindow);

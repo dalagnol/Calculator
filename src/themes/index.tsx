@@ -63,7 +63,7 @@ export const Themed = observer(({ children }: any) => {
 
       setThemes((currentThemes: any) => ({
         ...currentThemes,
-        [name]: config[Theme],
+        [name]: config[Theme]
       }));
 
       if (!config[Theme]) {
@@ -100,7 +100,7 @@ export const Themed = observer(({ children }: any) => {
 
       setThemes({
         ...Themes,
-        [theme]: { ...Themes[theme], [property]: value },
+        [theme]: { ...Themes[theme], [property]: value }
       });
 
       Log.system(
@@ -156,10 +156,18 @@ export const Themed = observer(({ children }: any) => {
       Add: Add(agent),
       Remove: Remove(agent),
       Set: Set(agent),
-      Unset: Unset(agent),
+      Unset: Unset(agent)
     }),
     [Theme, Use, Switch, Add, Remove, Set, Unset]
   );
+
+  useEffect(
+   () => {
+     let theme = localStorage.getItem("theme")?.toLowerCase();
+     if (theme) {
+      Use(theme);
+     }
+  }, [Use]);
 
   useEffect(
     useCallback(() => {
@@ -182,11 +190,11 @@ export const Themed = observer(({ children }: any) => {
         DevTools,
         ToggleDevTools,
         History: Log.history,
-        ClearHistory: function () {
+        ClearHistory: function() {
           Log.clear();
         },
         For,
-        ...Themes,
+        ...Themes
       }}
     >
       {children}

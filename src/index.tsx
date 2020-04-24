@@ -6,8 +6,15 @@ import { App } from "./app/App";
 import "./styles/standard.css";
 import "./styles/fonts.css";
 
+import { Themed } from "./themes";
+
 import * as serviceWorker from "./serviceWorker";
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(
+  <Themed>
+    <App />
+  </Themed>,
+  document.getElementById("root")
+);
 
 serviceWorker.unregister();

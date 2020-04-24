@@ -3,7 +3,7 @@ import React, {
   useEffect,
   useRef,
   useCallback,
-  useMemo,
+  useMemo
 } from "react";
 
 import { useTheme } from "../../themes";
@@ -20,11 +20,11 @@ import {
   opcodes,
   byKeycode,
   numberWithoutShift,
-  e as event,
+  e as event
 } from "./constants";
 
 export default function Calculator() {
-  const { Use } = useTheme("calculator", theme);
+  const { Name } = useTheme("calculator", theme);
   const ref: any = useRef(null);
 
   const [editing, setEditing] = useState("x");
@@ -38,20 +38,13 @@ export default function Calculator() {
   const [pressed, setPressed] = useState<number>(0);
 
   useEffect(
-    useCallback(() => {
-      setInterval(() => {
-        const Theme =
-          window
-            .getComputedStyle(document.body, null)
-            .getPropertyValue("background").includes("rgb(64, 36, 0)")
-            ? "dark"
-            : "light";
-
-        Use(Theme);
-      }, 1000);
-    }, [Use]),
-    []
-  );
+    () => {
+        if (Name === "light") {
+          document.body.style.background = "linear-gradient(#CE9143, #CB9D62)";
+        } else {
+          document.body.style.background = "linear-gradient(#402400, #573100)";
+        }
+  }, [Name]);
 
   const clear = () => {
     setEditing("x");
@@ -214,7 +207,7 @@ export default function Calculator() {
         operateTwoNumbers(x, y, operation);
         setEditing("x");
       }
-    },
+    }
   };
 
   const handle = useCallback(

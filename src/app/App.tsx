@@ -1,15 +1,24 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import { Calculator } from "../views";
 
-import { Themed } from "../themes";
+import { ThemeContext } from "styled-components";
 
 import { createGlobalStyle } from "styled-components";
 
 const electron = window.require("electron");
 const ipcRenderer = electron.ipcRenderer;
 
-const GlobalStyle = createGlobalStyle`
+export const App = () => {
+  const { For } = useContext(ThemeContext);
+  const { Use } = For("app");
+
+  ipcRenderer.on("theme", (e: any, ...args: any) => {
+    Use(String(args).toLowerCase());
+    localStorage.setItem("theme", String(args));
+  });
+
+  const GlobalStyle = createGlobalStyle`
   body {
     overflow: hidden;
 
@@ -22,11 +31,10 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-export const App = () => {
   return (
-    <Themed>
+    <>
       <GlobalStyle />
       <Calculator />
-    </Themed>
+    </>
   );
 };
