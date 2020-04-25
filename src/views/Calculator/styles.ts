@@ -11,8 +11,6 @@ export const Container = styled.div`
     }
   }
 
-  background: ${({ theme }) => theme.calculator?.background};
-
   -webkit-app-region: drag;
 
   width: 100vw;
@@ -32,7 +30,7 @@ export const Screen = styled.div`
 
   grid-column-start: 2;
   grid-column-end: 9;
-  grid-row-start: 2;
+  grid-row-start: 1;
   grid-row-end: 3;
 
   overflow: hidden;
@@ -40,7 +38,7 @@ export const Screen = styled.div`
 
 export const Result = styled.h1`
   font-family: Roboto;
-  font-size: 1.3em;
+  font-size: 1.8em;
 
   color: ${({ theme }) => theme.calculator?.text};
 

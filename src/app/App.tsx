@@ -23,10 +23,15 @@ export const App = () => {
     overflow: hidden;
 
     @media (prefers-color-scheme: dark) {
-      background: linear-gradient(#402400, #573100);
+      background-color: #CE9143;
+      background-image: linear-gradient(90deg, rgba(206,145,67,.07) 50%, transparent 50%), 
+      linear-gradient(90deg, rgba(255,224,185,.13) 50%, transparent 50%), 
+      linear-gradient(90deg, rgba(135,79,6,.17) 50%, transparent 50%), 
+      linear-gradient(90deg, rgba(90,51,3,.19) 50%, transparent 50%);
+      background-size: 13px, 29px, 37px, 53px;
     }
     @media (prefers-color-scheme: light) {
-      background: linear-gradient(#CE9143, #CB9D62);
+      background-image: url('https://images.template.net/wp-content/uploads/2016/04/22084512/Light-Colored-Wooden-Background.jpg');
     }
   }
 `;
