@@ -36,6 +36,7 @@ export default function Calculator() {
   const [newNumber, setNewNumber] = useState(false);
   const [displayY, setDisplayY] = useState(false);
   const [pressed, setPressed] = useState<number>(0);
+  const [willBeNegative, setWillBeNegative] = useState(false);
 
   useEffect(
     () => {
@@ -58,6 +59,7 @@ export default function Calculator() {
     setComma(1);
     setRow(false);
     setDisplayY(false);
+    setWillBeNegative(false);
 
     return true;
   };
@@ -106,15 +108,20 @@ export default function Calculator() {
 
       if (result === "0") {
         result = "";
+
+        if (willBeNegative) {
+          result = String(Operations.change(value, 0));
+        }
       }
 
       if (comma === 2) {
         result = result.concat(`.${value}`);
         setComma(0);
-      } else {
+      } else if (!willBeNegative) {
         result = result.concat(value);
         setNewNumber(false);
       }
+      setWillBeNegative(false);
 
       if (row || editing === "y") {
         setY(Number(result));
@@ -125,11 +132,14 @@ export default function Calculator() {
 
       return result;
     },
-    [comma, editing, newNumber, row, x, y]
+    [comma, editing, newNumber, row, x, y, willBeNegative]
   );
 
   const submitOperation = (op: string) => {
     if (!x) {
+      if (op === "subtract") {
+        setWillBeNegative(true);
+      }
       return true;
     } else if (operation) {
       operateTwoNumbers(x, y, operation);
