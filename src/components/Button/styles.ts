@@ -43,21 +43,21 @@ export const Button = styled.button<Props>`
       color: ${theme.button?.selectedtext};
       `)}
 
-  &:active {
-    ${({ color, theme }) =>
-      (color === "number" &&
-        `
-        background: radial-gradient(circle, ${theme.button?.darknumber}, ${theme.button?.lightnumber});
-        `) ||
-      (color === "main" &&
-        `
-        background: radial-gradient(circle, ${theme.button?.darkmain}, ${theme.button?.lightmain});
-        `) ||
-      (color === "secondary" &&
-        `
-        background: radial-gradient(circle, ${theme.button?.darksecondary}, ${theme.button?.lightsecondary});
-        `)}
-  }
+      &:active {
+        ${({ color, theme }) =>
+          (color === "number" &&
+            `
+            background: radial-gradient(circle, ${theme.button?.darknumber}, ${theme.button?.lightsecondary});
+            `) ||
+          (color === "main" &&
+            `
+            background: radial-gradient(circle, ${theme.button?.darkmain}, ${theme.button?.lightmain});
+            `) ||
+          (color === "secondary" &&
+            `
+            background: radial-gradient(circle, ${theme.button?.darksecondary}, ${theme.button?.darknumber});
+            `)}
+      }
 
   ${({ position }) =>
     `
