@@ -9,16 +9,16 @@ const locale: {
 } = {
   en: {
     dec: ",",
-    sep: ".",
+    sep: "."
   },
   pt: {
     dec: ".",
-    sep: ",",
+    sep: ","
   },
   fr: {
     dec: " ",
-    sep: ",",
-  },
+    sep: ","
+  }
 };
 
 const localised: { [y in spot]: character } = locale["en"];
@@ -26,10 +26,16 @@ const localised: { [y in spot]: character } = locale["en"];
 export function format(x: number | string) {
   x = String(x);
   let y = "";
+  let z = "";
 
   if (x.includes(".")) {
     y = x.substring(x.indexOf(".") + 1);
     x = x.substring(0, x.indexOf("."));
+  }
+
+  if (x.includes("-")) {
+    z = x.substring(1, x.indexOf("-"));
+    x = x.substring(x.indexOf("-") + 1);
   }
 
   const arr = [];
@@ -39,14 +45,16 @@ export function format(x: number | string) {
 
   arr.reverse();
 
-  return `${arr.join(localised.dec)}${Number(y) ? `${localised.sep}${y}` : ""}`;
+  return `${z}${arr.join(localised.dec)}${
+    Number(y) ? `${localised.sep}${y}` : ""
+  }`;
 }
 
 export const opcodes: { [x: number]: string } = {
   2: "divide",
   3: "multiply",
   4: "subtract",
-  5: "sum",
+  5: "sum"
 };
 
 export const table: any = [
@@ -68,7 +76,7 @@ export const table: any = [
   ["+", 187, true],
   ["0", 48],
   [",", 190],
-  ["=", 187],
+  ["=", 187]
 ];
 
 export const byKeycode = (keyCode: number) => (entry: any) =>
