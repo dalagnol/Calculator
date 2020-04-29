@@ -6,13 +6,13 @@ import React, {
   useMemo
 } from "react";
 
-import { useTheme } from "../../themes";
+import { useTheme } from "theme";
 
 import Operations from "../../operations";
 
 import { Container, Screen, Result } from "./styles";
 import { Button } from "../../components";
-import { theme } from "./json";
+import { themejson } from "./json";
 
 import {
   format as formatted,
@@ -24,7 +24,7 @@ import {
 } from "./constants";
 
 export default function Calculator() {
-  const { Name } = useTheme("calculator", theme);
+  const { theme } = useTheme("calculator", themejson);
   const ref: any = useRef(null);
 
   const [editing, setEditing] = useState("x");
@@ -39,16 +39,16 @@ export default function Calculator() {
 
   useEffect(
     () => {
-        if (Name === "light") {
+        if (theme.current === "light") {
           document.body.style.backgroundColor = "";
           document.body.style.backgroundImage = "url('https://images.template.net/wp-content/uploads/2016/04/22084512/Light-Colored-Wooden-Background.jpg')";
           document.body.style.backgroundSize = "";
-        } else if (Name === "dark") {
+        } else if (theme.current === "dark") {
           document.body.style.backgroundColor = "#CD9143";
           document.body.style.backgroundImage = "linear-gradient(90deg, rgba(206,145,67,.07) 50%, transparent 50%), linear-gradient(90deg, rgba(255,224,185,.13) 50%, transparent 50%), linear-gradient(90deg, rgba(135,79,6,.17) 50%, transparent 50%), linear-gradient(90deg, rgba(90,51,3,.19) 50%, transparent 50%)";
           document.body.style.backgroundSize = "13px, 29px, 37px, 53px";
         }
-  }, [Name]);
+  }, [theme.current]);
 
   const clear = () => {
     setEditing("x");

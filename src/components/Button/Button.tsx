@@ -1,8 +1,8 @@
 import React from "react";
-import { useTheme } from "../../themes";
+import { useTheme } from "theme";
 
 import { Button as Element } from "./styles";
-import { theme } from "./json";
+import { themejson } from "./json";
 
 interface Props {
   children: string;
@@ -21,9 +21,11 @@ export default function Button({
   pressed,
   onClick,
   onKeyDown,
-  onKeyUp,
+  onKeyUp
 }: Props) {
-  useTheme("button", theme);
+  const { theme, contexts } = useTheme("Button", themejson);
+
+  console.log(contexts);
 
   return (
     <Element

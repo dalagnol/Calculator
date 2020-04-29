@@ -6,12 +6,12 @@ import { App } from "./app/App";
 import "./styles/standard.css";
 import "./styles/fonts.css";
 
-import { Themed } from "./themes";
+import { Themed } from "theme";
 
 import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
-  <Themed>
+  <Themed themes={["light", "dark"]} forgetful={true}>
     <App />
   </Themed>,
   document.getElementById("root")

@@ -101,7 +101,8 @@ function createWindow() {
 
   mainWindow.removeMenu();
   mainWindow.on("closed", () => (mainWindow = null));
-  setTimeout(() => {
+  mainWindow.webContents.openDevTools();
+    setTimeout(() => {
     mainWindow.webContents.send(
       "theme",
       menuTemplate

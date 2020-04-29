@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 
 import { Calculator } from "../views";
 
-import { ThemeContext } from "styled-components";
+import { useTheme } from "theme";
 
 import { createGlobalStyle } from "styled-components";
 
@@ -10,11 +10,14 @@ const electron = window.require("electron");
 const ipcRenderer = electron.ipcRenderer;
 
 export const App = () => {
-  const { For } = useContext(ThemeContext);
-  const { Use } = For("app");
+  const { theme } = useTheme("App", {
+    light: { bkc: "white" },
+    dark: { bkc: "black" }
+  });
 
   ipcRenderer.on("theme", (e: any, ...args: any) => {
-    Use(String(args).toLowerCase());
+    theme.set(String(args).toLowerCase());
+    // Fix the fact that this funcgtion does not guarantee usage of only first argument
     localStorage.setItem("theme", String(args));
   });
 

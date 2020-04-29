@@ -1,3 +1,3 @@
-import theme from "./theme.json";
+import themejson from "./theme.json";
 
-export { theme };
+export { themejson };

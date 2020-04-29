@@ -26,7 +26,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "@types/electron": "^1.6.10",
-    "@types/styled-components": "^5.0.1",
+    "@types/styled-components": "^5.1.0",
     "electron-is-dev": "^1.2.0",
     "mobx": "^5.15.4",
     "mobx-react": "^6.2.1",
@@ -35,7 +35,8 @@
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
     "styled-components": "^5.1.0",
-    "styled-icons": "9.5.0"
+    "styled-icons": "9.5.0",
+    "theme": "file:/Users/julia/Sites/reactModules/theme"
   },
   "main": "public/electron.js",
   "homepage": "./",
