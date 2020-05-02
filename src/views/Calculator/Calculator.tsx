@@ -36,18 +36,20 @@ export default function Calculator() {
   const [newNumber, setNewNumber] = useState(false);
   const [displayY, setDisplayY] = useState(false);
   const [pressed, setPressed] = useState<number>(0);
+  const [willBeNegative, setWillBeNegative] = useState(false);
 
-  useEffect(
-    () => {
-        if (theme.current === "light") {
-          document.body.style.backgroundColor = "";
-          document.body.style.backgroundImage = "url('https://images.template.net/wp-content/uploads/2016/04/22084512/Light-Colored-Wooden-Background.jpg')";
-          document.body.style.backgroundSize = "";
-        } else if (theme.current === "dark") {
-          document.body.style.backgroundColor = "#CD9143";
-          document.body.style.backgroundImage = "linear-gradient(90deg, rgba(206,145,67,.07) 50%, transparent 50%), linear-gradient(90deg, rgba(255,224,185,.13) 50%, transparent 50%), linear-gradient(90deg, rgba(135,79,6,.17) 50%, transparent 50%), linear-gradient(90deg, rgba(90,51,3,.19) 50%, transparent 50%)";
-          document.body.style.backgroundSize = "13px, 29px, 37px, 53px";
-        }
+  useEffect(() => {
+    if (theme.current === "light") {
+      document.body.style.backgroundColor = "";
+      document.body.style.backgroundImage =
+        "url('https://images.template.net/wp-content/uploads/2016/04/22084512/Light-Colored-Wooden-Background.jpg')";
+      document.body.style.backgroundSize = "";
+    } else if (theme.current === "dark") {
+      document.body.style.backgroundColor = "#CD9143";
+      document.body.style.backgroundImage =
+        "linear-gradient(90deg, rgba(206,145,67,.07) 50%, transparent 50%), linear-gradient(90deg, rgba(255,224,185,.13) 50%, transparent 50%), linear-gradient(90deg, rgba(135,79,6,.17) 50%, transparent 50%), linear-gradient(90deg, rgba(90,51,3,.19) 50%, transparent 50%)";
+      document.body.style.backgroundSize = "13px, 29px, 37px, 53px";
+    }
   }, [theme.current]);
 
   const clear = () => {
@@ -58,6 +60,7 @@ export default function Calculator() {
     setComma(1);
     setRow(false);
     setDisplayY(false);
+    setWillBeNegative(false);
 
     return true;
   };
@@ -106,15 +109,20 @@ export default function Calculator() {
 
       if (result === "0") {
         result = "";
+
+        if (willBeNegative) {
+          result = String(Operations.change(value, 0));
+        }
       }
 
       if (comma === 2) {
         result = result.concat(`.${value}`);
         setComma(0);
-      } else {
+      } else if (!willBeNegative) {
         result = result.concat(value);
         setNewNumber(false);
       }
+      setWillBeNegative(false);
 
       if (row || editing === "y") {
         setY(Number(result));
@@ -125,11 +133,14 @@ export default function Calculator() {
 
       return result;
     },
-    [comma, editing, newNumber, row, x, y]
+    [comma, editing, newNumber, row, x, y, willBeNegative]
   );
 
   const submitOperation = (op: string) => {
     if (!x) {
+      if (op === "subtract") {
+        setWillBeNegative(true);
+      }
       return true;
     } else if (operation) {
       operateTwoNumbers(x, y, operation);
