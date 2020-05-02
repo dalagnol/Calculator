@@ -2,23 +2,30 @@ import React from "react";
 
 import { Calculator } from "../views";
 
-import { useTheme } from "theme";
+import { Themed, useTheme } from "theme";
 
 import { createGlobalStyle } from "styled-components";
 
 const electron = window.require("electron");
 const ipcRenderer = electron.ipcRenderer;
 
-export const App = () => {
-  const { theme } = useTheme("App", {
-    light: { bkc: "white" },
-    dark: { bkc: "black" }
-  });
+interface Props {
+  automatic: boolean;
+  bodyBackground: string
+}
+
+export const App = ({automatic, bodyBackground}: Props) => {
+  const { theme } = useTheme("App");
+
+  bodyBackground = document.body.style.backgroundColor;
 
   ipcRenderer.on("theme", (e: any, ...args: any) => {
-    theme.set(String(args).toLowerCase());
-    // Fix the fact that this funcgtion does not guarantee usage of only first argument
-    localStorage.setItem("theme", String(args));
+    if (args[0] === "Automatic") {
+      automatic = true;
+    } else {
+      theme.set(String(args[0]).toLowerCase());
+      localStorage.setItem("theme", String(args[0]));
+    }
   });
 
   const GlobalStyle = createGlobalStyle`

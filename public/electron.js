@@ -57,7 +57,15 @@ const menuTemplate = [
               mainWindow.webContents.send("theme", "Dark");
             }
           },
-          { type: "radio", label: "Automatic", enabled: true, checked: false }
+          {
+            type: "radio",
+            label: "Automatic",
+            enabled: true,
+            checked: false,
+            click() {
+              mainWindow.webContents.send("theme", "Automatic");
+            }
+          }
         ]
       },
       { type: "separator" },
@@ -102,7 +110,7 @@ function createWindow() {
   mainWindow.removeMenu();
   mainWindow.on("closed", () => (mainWindow = null));
   mainWindow.webContents.openDevTools();
-    setTimeout(() => {
+  setTimeout(() => {
     mainWindow.webContents.send(
       "theme",
       menuTemplate
