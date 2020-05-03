@@ -109,7 +109,7 @@ function createWindow() {
 
   mainWindow.removeMenu();
   mainWindow.on("closed", () => (mainWindow = null));
-  mainWindow.webContents.openDevTools();
+  //mainWindow.webContents.openDevTools();
   setTimeout(() => {
     mainWindow.webContents.send(
       "theme",
