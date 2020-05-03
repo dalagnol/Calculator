@@ -4,8 +4,6 @@ import { Calculator } from "../views";
 
 import { useTheme } from "theme";
 
-import { createGlobalStyle } from "styled-components";
-
 const electron = window.require("electron");
 const ipcRenderer = electron.ipcRenderer;
 
@@ -25,16 +23,8 @@ export const App = () => {
     }
   });
 
-  const GlobalStyle = createGlobalStyle`
-  body {
-    overflow: hidden;
-    margin: 0;
-  }
-`;
-
   return (
     <>
-      <GlobalStyle />
       <Calculator />
     </>
   );

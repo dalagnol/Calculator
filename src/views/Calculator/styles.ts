@@ -17,6 +17,7 @@ export const Container = styled.div`
   margin: 0;
 
   justify-content: center;
+  align-content: center;
 
   display: grid;
 
@@ -43,4 +44,5 @@ export const Result = styled.h1`
   color: ${({ theme }) => theme.calculator?.text};
 
   margin-right: 10px;
+  margin-top: 20px;
 `;
