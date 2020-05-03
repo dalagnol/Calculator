@@ -10,20 +10,25 @@ import "./styles/fonts.css";
 
 import * as serviceWorker from "./serviceWorker";
 
-let automatic = false;
-let bodyBackground = "";
+const electron = window.require("electron");
+const ipcRenderer = electron.ipcRenderer;
 
-ReactDOM.render(
-  <Themed
-    themes={["light", "dark"]}
-    forgetful={true}
-    OSPreference={
-      automatic ? (bodyBackground === "#CE9143" ? "dark" : "light") : ""
-    }
-  >
-    <App automatic={automatic} bodyBackground={bodyBackground} />
-  </Themed>,
-  document.getElementById("root")
-);
+ipcRenderer.on("theme", (e: any, ...args: any) => {
+  let automatic = false;
+  if (args[0] === "automatic") {
+    automatic = true;
+  }
+
+  ReactDOM.render(
+    <Themed
+      themes={["light", "dark"]}
+      forgetful={true}
+      OSPreference={automatic ? (args[1] ? "dark" : "light") : ""}
+    >
+      <App />
+    </Themed>,
+    document.getElementById("root")
+  );
+});
 
 serviceWorker.unregister();

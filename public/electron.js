@@ -1,5 +1,5 @@
 const electron = require("electron");
-const { app, BrowserWindow, Menu, ipcMain } = electron;
+const { app, BrowserWindow, Menu, ipcMain, nativeTheme } = electron;
 
 const path = require("path");
 const isDev = require("electron-is-dev");
@@ -45,7 +45,7 @@ const menuTemplate = [
             enabled: true,
             checked: true,
             click() {
-              mainWindow.webContents.send("theme", "Light");
+              mainWindow.webContents.send("theme", "light");
             }
           },
           {
@@ -54,7 +54,7 @@ const menuTemplate = [
             enabled: true,
             checked: false,
             click() {
-              mainWindow.webContents.send("theme", "Dark");
+              mainWindow.webContents.send("theme", "dark");
             }
           },
           {
@@ -63,7 +63,7 @@ const menuTemplate = [
             enabled: true,
             checked: false,
             click() {
-              mainWindow.webContents.send("theme", "Automatic");
+              mainWindow.webContents.send("theme", "automatic", nativeTheme.shouldUseDarkColors);
             }
           }
         ]
@@ -109,7 +109,7 @@ function createWindow() {
 
   mainWindow.removeMenu();
   mainWindow.on("closed", () => (mainWindow = null));
-  //mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
   setTimeout(() => {
     mainWindow.webContents.send(
       "theme",

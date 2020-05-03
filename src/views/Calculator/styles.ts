@@ -5,11 +5,9 @@ const rowMargin = navigator?.userAgent?.toLowerCase().includes("macintosh")
   : "13px";
 
 export const Container = styled.div`
-  @media (prefers-color-scheme: dark) {
-    body {
-      background-color: black;
-    }
-  }
+  background-color: ${({ theme }) => theme.calculator?.backgroundColor};
+  background-image: ${({ theme }) => theme.calculator?.backgroundImage};
+  background-size: ${({ theme }) => theme.calculator?.backgroundSize};
 
   -webkit-app-region: drag;
 
@@ -17,6 +15,8 @@ export const Container = styled.div`
   height: 100vh;
 
   margin: 0;
+
+  justify-content: center;
 
   display: grid;
 

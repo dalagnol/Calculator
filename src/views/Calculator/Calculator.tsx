@@ -1,6 +1,5 @@
 import React, {
   useState,
-  useEffect,
   useRef,
   useCallback,
   useMemo
@@ -24,7 +23,7 @@ import {
 } from "./constants";
 
 export default function Calculator() {
-  const { theme } = useTheme("calculator", themejson);
+  useTheme("calculator", themejson);
   const ref: any = useRef(null);
 
   const [editing, setEditing] = useState("x");
@@ -37,20 +36,6 @@ export default function Calculator() {
   const [displayY, setDisplayY] = useState(false);
   const [pressed, setPressed] = useState<number>(0);
   const [willBeNegative, setWillBeNegative] = useState(false);
-
-  useEffect(() => {
-    if (theme.current === "light") {
-      document.body.style.backgroundColor = "";
-      document.body.style.backgroundImage =
-        "url('https://images.template.net/wp-content/uploads/2016/04/22084512/Light-Colored-Wooden-Background.jpg')";
-      document.body.style.backgroundSize = "";
-    } else if (theme.current === "dark") {
-      document.body.style.backgroundColor = "#CD9143";
-      document.body.style.backgroundImage =
-        "linear-gradient(90deg, rgba(206,145,67,.07) 50%, transparent 50%), linear-gradient(90deg, rgba(255,224,185,.13) 50%, transparent 50%), linear-gradient(90deg, rgba(135,79,6,.17) 50%, transparent 50%), linear-gradient(90deg, rgba(90,51,3,.19) 50%, transparent 50%)";
-      document.body.style.backgroundSize = "13px, 29px, 37px, 53px";
-    }
-  }, [theme]);
 
   const clear = () => {
     setEditing("x");
