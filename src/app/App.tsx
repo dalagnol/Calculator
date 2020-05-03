@@ -2,7 +2,7 @@ import React from "react";
 
 import { Calculator } from "../views";
 
-import { Themed, useTheme } from "theme";
+import { useTheme } from "theme";
 
 import { createGlobalStyle } from "styled-components";
 
@@ -11,10 +11,10 @@ const ipcRenderer = electron.ipcRenderer;
 
 interface Props {
   automatic: boolean;
-  bodyBackground: string
+  bodyBackground: string;
 }
 
-export const App = ({automatic, bodyBackground}: Props) => {
+export const App = ({ automatic, bodyBackground }: Props) => {
   const { theme } = useTheme("App");
 
   bodyBackground = document.body.style.backgroundColor;

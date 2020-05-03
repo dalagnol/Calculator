@@ -23,9 +23,7 @@ export default function Button({
   onKeyDown,
   onKeyUp
 }: Props) {
-  const { theme, contexts } = useTheme("Button", themejson);
-
-  console.log(contexts);
+  useTheme("Button", themejson);
 
   return (
     <Element
