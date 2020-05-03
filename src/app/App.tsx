@@ -28,7 +28,7 @@ export const App = ({ automatic, bodyBackground }: Props) => {
     }
   });
 
-  const GlobalStyle = createGlobalStyle`
+  /*const GlobalStyle = createGlobalStyle`
   body {
     overflow: hidden;
 
@@ -44,11 +44,10 @@ export const App = ({ automatic, bodyBackground }: Props) => {
       background-image: url('https://images.template.net/wp-content/uploads/2016/04/22084512/Light-Colored-Wooden-Background.jpg');
     }
   }
-`;
+`;*/
 
   return (
     <>
-      <GlobalStyle />
       <Calculator />
     </>
   );
