@@ -1,31 +1,39 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import { Calculator } from "../views";
 
-import { useTheme } from "theme";
+import { Themed, useTheme } from "theme";
 
 const electron = window.require("electron");
 const ipcRenderer = electron.ipcRenderer;
 
-interface Props {
-  setAutomatic: Function;
-  setDark: Function;
-  automatic: boolean;
-}
-
 export const App = () => {
-  const { theme } = useTheme("App");
-
-  ipcRenderer.on("theme", (e: any, ...args: any) => {
-    if (args[0] !== "automatic") {
-      theme.set(args[0]);
-      localStorage.setItem("theme", args[0]);
-    }
-  });
+  const [theme, setTheme] = useState<string | undefined>("light");
 
   return (
-    <>
-      <Calculator />
-    </>
+    <Themed themes={["light", "dark"]} forgetful={true} OSPreference={theme}>
+      {(function Application() {
+        const { theme } = useTheme("App");
+
+        useEffect(() => {
+          ipcRenderer.send(
+            "init",
+            String(localStorage.getItem("calculatorThemePreference"))
+          );
+        }, []);
+
+        ipcRenderer.on("theme", (e: any, ...args: any) => {
+          if (args[0] === "automatic") {
+            setTheme(args[1] ? "dark" : "light");
+          } else {
+            setTheme(undefined);
+            theme.set(args[0]);
+            localStorage.setItem("theme", args[0]);
+          }
+        });
+
+        return <Calculator />;
+      })()}
+    </Themed>
   );
 };

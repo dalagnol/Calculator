@@ -1,5 +1,5 @@
 const electron = require("electron");
-const { app, BrowserWindow, Menu, ipcMain, nativeTheme } = electron;
+const { app, ipcMain, BrowserWindow, Menu, nativeTheme } = electron;
 
 const path = require("path");
 const isDev = require("electron-is-dev");
@@ -18,16 +18,16 @@ const menuTemplate = [
       { role: "hideothers" },
       { role: "unhide" },
       { type: "separator" },
-      { role: "quit" }
-    ]
+      { role: "quit" },
+    ],
   },
   {
     label: "File",
-    submenu: [{ role: "close" }, { role: "minimize" }]
+    submenu: [{ role: "close" }, { role: "minimize" }],
   },
   {
     label: "Edit",
-    submenu: [{ role: "copy" }, { role: "paste" }]
+    submenu: [{ role: "copy" }, { role: "paste" }],
   },
   {
     label: "View",
@@ -43,10 +43,10 @@ const menuTemplate = [
             type: "radio",
             label: "Light",
             enabled: true,
-            checked: true,
+            checked: false,
             click() {
               mainWindow.webContents.send("theme", "light");
-            }
+            },
           },
           {
             type: "radio",
@@ -55,7 +55,7 @@ const menuTemplate = [
             checked: false,
             click() {
               mainWindow.webContents.send("theme", "dark");
-            }
+            },
           },
           {
             type: "radio",
@@ -63,29 +63,33 @@ const menuTemplate = [
             enabled: true,
             checked: false,
             click() {
-              mainWindow.webContents.send("theme", "automatic", nativeTheme.shouldUseDarkColors);
-            }
-          }
-        ]
+              mainWindow.webContents.send(
+                "theme",
+                "automatic",
+                nativeTheme.shouldUseDarkColors
+              );
+            },
+          },
+        ],
       },
       { type: "separator" },
       {
         type: "normal",
         label: "Show thousand separators",
         enabled: false,
-        checked: true
-      }
-    ]
+        checked: true,
+      },
+    ],
   },
   {
     label: "Help",
-    submenu: [{ type: "normal", label: "You are on your own" }]
-  }
+    submenu: [{ type: "normal", label: "You are on your own" }],
+  },
 ];
 
 const menu = Menu.buildFromTemplate(menuTemplate);
 
-const byLabel = (byLabel, label) => entry => entry[label] === byLabel;
+const byLabel = (label) => (entry) => entry.label === label;
 
 Menu.setApplicationMenu(menu);
 
@@ -97,9 +101,9 @@ function createWindow() {
     titleBarStyle: "hidden",
     title: "Abacus",
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
     },
-    maximizable: false
+    maximizable: false,
   });
   mainWindow.loadURL(
     isDev
@@ -110,15 +114,29 @@ function createWindow() {
   mainWindow.removeMenu();
   mainWindow.on("closed", () => (mainWindow = null));
   mainWindow.webContents.openDevTools();
-  setTimeout(() => {
-    mainWindow.webContents.send(
-      "theme",
-      menuTemplate
-        .find(byLabel("View", "label"))
-        .submenu.find(byLabel("Themes", "label"))
-        .submenu.find(byLabel(true, "checked")).label
-    );
-  }, 20000);
+  ipcMain.on("init", (...args) => {
+    menuTemplate
+      .find(byLabel("View"))
+      .submenu.find(byLabel("Themes"))
+      .submenu.forEach(
+        (x) =>
+          (x.checked =
+            (["automatic", "light", "dark"].includes(args[1]) &&
+              x.label.toLowerCase() === args[1]) ||
+            x.label === "Automatic")
+      );
+
+    Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate));
+    // Menu.setApplicationMenu([]);
+
+    // mainWindow.webContents.send(
+    //   "theme",
+    //   menuTemplate
+    //     .find(byLabel("View"))
+    //     .submenu.find(byLabel("Themes"))
+    //     .submenu.find((x) => x.checked).label
+    // );
+  });
 }
 
 app.on("ready", createWindow);
