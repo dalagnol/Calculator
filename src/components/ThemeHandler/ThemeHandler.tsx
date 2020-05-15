@@ -15,19 +15,18 @@ export default function ThemeHandler({ setTheme }: Props) {
   const { theme } = useTheme("ThemeHandler");
 
   useEffect(() => {
-    ipcRenderer.send(
-      "init",
-      String(localStorage.getItem("calculatorThemePreference"))
-    );
+    let LSTheme = localStorage.getItem("calculatorThemePreference");
+    ipcRenderer.send("init", String(LSTheme));
   }, []);
 
   ipcRenderer.on("theme", (e: any, ...args: any) => {
     if (args[0] === "automatic") {
       setTheme(args[1] ? "dark" : "light");
+      localStorage.setItem("calculatorThemePreference", "");
     } else {
       setTheme(undefined);
       theme.set(args[0]);
-      localStorage.setItem("calculatorThemePreference", args[0]);
+      localStorage.setItem("calculatorThemePreference", args[0].toLowerCase());
     }
   });
 
