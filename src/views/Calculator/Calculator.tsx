@@ -36,6 +36,7 @@ export default function Calculator() {
   const [displayY, setDisplayY] = useState(false);
   const [pressed, setPressed] = useState<number>(0);
   const [willBeNegative, setWillBeNegative] = useState(false);
+  const [error, setError] = useState(false);
 
   const clear = () => {
     setEditing("x");
@@ -46,13 +47,14 @@ export default function Calculator() {
     setRow(false);
     setDisplayY(false);
     setWillBeNegative(false);
+    setError(false);
 
     return true;
   };
 
   const operateTwoNumbers = (x: number, y: number, operation: string) => {
-    if (x && y && operation) {
-      const result = Operations[operation](x, y);
+    if (operation) {
+      const result = operation !== "divide" ? Operations[operation](x, y) : Operations[operation](x, y, setError);
       clear();
       setNewNumber(true);
       setX(result);
@@ -122,10 +124,8 @@ export default function Calculator() {
   );
 
   const submitOperation = (op: string) => {
-    if (!x) {
-      if (op === "subtract") {
-        setWillBeNegative(true);
-      }
+    if (!x && op === "subtract") {
+      setWillBeNegative(true);
       return true;
     } else if (operation) {
       operateTwoNumbers(x, y, operation);
@@ -162,7 +162,7 @@ export default function Calculator() {
   };
 
   const display = useMemo(
-    () => (editing === "y" && displayY ? formatted(y) : formatted(x)),
+    () => (!error ? editing === "y" && displayY ? formatted(y) : formatted(x) : "Error"),
     [displayY, editing, x, y]
   );
 

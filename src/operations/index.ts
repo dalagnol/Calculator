@@ -16,8 +16,15 @@ const multiply = (x: number, y: number) => {
   return r;
 };
 
-const divide = (x: number, y: number) => {
-  let r = x / y;
+const divide = (x: number, y: number, setError: Function) => {
+  let r = 0;
+
+  if (y) {
+    r = x / y;
+  } else {
+    r = 0;
+    setError(true);
+  }
 
   return r;
 };
