@@ -128,14 +128,14 @@ function createWindow() {
 
     Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate));
     //Menu.setApplicationMenu([]);
+    mainWindow.webContents.send(
+      "theme",
+      menuTemplate
+        .find(byLabel("View"))
+        .submenu.find(byLabel("Themes"))
+        .submenu.find(x => x.checked === true)?.label
+    );
   });
-  mainWindow.webContents.send(
-    "theme",
-    menuTemplate
-      .find(byLabel("View"))
-      .submenu.find(byLabel("Themes"))
-      .submenu.find(x => x.checked === true)?.label
-  );
 }
 
 app.on("ready", createWindow);
