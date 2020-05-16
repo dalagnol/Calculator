@@ -262,6 +262,7 @@ export default function Calculator() {
 
           result.push(
             <Button
+              key={i} 
               color={
                 column === 4 && operation === opcodes[row]
                   ? "selected"
