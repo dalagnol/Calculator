@@ -1,9 +1,4 @@
-import React, {
-  useState,
-  useRef,
-  useCallback,
-  useMemo
-} from "react";
+import React, { useState, useRef, useCallback, useMemo } from "react";
 
 import { useTheme } from "theme";
 
@@ -38,7 +33,7 @@ export default function Calculator() {
   const [willBeNegative, setWillBeNegative] = useState(false);
   const [error, setError] = useState(false);
 
-  const clear = () => {
+  const clear = (exceptError: string = "") => {
     setEditing("x");
     setX(0);
     setY(0);
@@ -47,15 +42,18 @@ export default function Calculator() {
     setRow(false);
     setDisplayY(false);
     setWillBeNegative(false);
-    setError(false);
+    !exceptError && setError(false);
 
     return true;
   };
 
   const operateTwoNumbers = (x: number, y: number, operation: string) => {
     if (operation) {
-      const result = operation !== "divide" ? Operations[operation](x, y) : Operations[operation](x, y, setError);
-      clear();
+      const result =
+        operation !== "divide"
+          ? Operations[operation](x, y)
+          : Operations[operation](x, y, setError);
+      clear("exceptError");
       setNewNumber(true);
       setX(result);
 
@@ -162,15 +160,24 @@ export default function Calculator() {
   };
 
   const display = useMemo(
-    () => (!error ? editing === "y" && displayY ? formatted(y) : formatted(x) : "Error"),
-    [displayY, editing, x, y]
+    () =>
+      !error
+        ? editing === "y" && displayY
+          ? formatted(y)
+          : formatted(x)
+        : "Error",
+    [displayY, editing, x, y, error]
   );
 
   const handlers: { [x: number]: Function } = {
     188: submitComma,
     190: submitComma,
-    27: clear,
-    67: clear,
+    27() {
+      clear();
+    },
+    67() {
+      clear();
+    },
     8: backspace,
     13() {
       operateTwoNumbers(x, y, operation);

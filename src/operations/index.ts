@@ -35,8 +35,8 @@ const percentage = (x: number, y: number = 0) => {
   if (!y) {
     r = x / 100;
   } else {
-    r = x / 100 * y;
-  };
+    r = (x / 100) * y;
+  }
 
   return r;
 };
@@ -53,7 +53,7 @@ const change = (x: number, y: number) => {
     r = r.slice(1);
   } else {
     r = `-${r}`;
-  }  
+  }
 
   return Number(r);
 };
@@ -64,7 +64,7 @@ let operations: any = {
   multiply,
   divide,
   percentage,
-  change,
-}
+  change
+};
 
 export default operations;
