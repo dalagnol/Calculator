@@ -16,11 +16,11 @@ export default function ThemeHandler({ setTheme }: Props) {
 
   useEffect(() => {
     let LSTheme = localStorage.getItem("calculatorThemePreference");
-    ipcRenderer.send("init", String(LSTheme));
+    ipcRenderer.send("init", String(LSTheme || ""));
   }, []);
 
   ipcRenderer.on("theme", (e: any, ...args: any) => {
-    if (args[0] === "automatic") {
+    if (args[0].toLowerCase() === "automatic") {
       setTheme(args[1] ? "dark" : "light");
       localStorage.setItem("calculatorThemePreference", "");
     } else {
