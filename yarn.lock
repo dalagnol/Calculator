@@ -7760,28 +7760,6 @@ mkdirp@^0.5.4:
   dependencies:
     minimist "^1.2.5"
 
-mobx-react-lite@2:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/mobx-react-lite/-/mobx-react-lite-2.0.4.tgz#bc38c9dfb56918d2d39588324d1ce1e3a649fb66"
-  integrity sha512-/iuPXh90VONdem69cxt4ipm/opQQEAm3v27eQkot9HO1eOeu+2VqGW7qTmbgShM6tqLv8FWvjc8fRwsvkoK5Qw==
-
-mobx-react@^6.2.1:
-  version "6.2.1"
-  resolved "https://registry.yarnpkg.com/mobx-react/-/mobx-react-6.2.1.tgz#2f2cf7be2e9f9b4661a31cec3b70b8116b1ebeff"
-  integrity sha512-/6K3Ssy2Hy8W8pHK55WWHWRFUnZfcG0w0pruhnOH0NfIGIHWKrDnnAmWl4CAb5eNaMgMUoaGMOxPQyDIWjRPRw==
-  dependencies:
-    mobx-react-lite "2"
-
-mobx@^5.15.4:
-  version "5.15.4"
-  resolved "https://registry.yarnpkg.com/mobx/-/mobx-5.15.4.tgz#9da1a84e97ba624622f4e55a0bf3300fb931c2ab"
-  integrity sha512-xRFJxSU2Im3nrGCdjSuOTFmxVDGeqOHL+TyADCGbT0k4HHqGmx5u2yaHNryvoORpI4DfbzjJ5jPmuv+d7sioFw==
-
-moment@^2.24.0:
-  version "2.24.0"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
-  integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
-
 move-concurrently@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/move-concurrently/-/move-concurrently-1.0.1.tgz#be2c005fda32e0b29af1f05d7c4b33214c701f92"
@@ -11243,7 +11221,7 @@ text-table@0.2.0, text-table@^0.2.0:
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
   integrity sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
 
-"theme@file:/Users/julia/Sites/reactModules/theme":
+"theme@file:../reactModules/theme":
   version "1.0.0"
 
 throat@^4.0.0:

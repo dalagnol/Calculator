@@ -3,10 +3,10 @@ import React, { useEffect } from "react";
 import { useTheme } from "theme";
 
 import { Calculator } from "../../views";
+import { OSPreferenceBasedDiv } from "./styles";
 
 const electron = window.require("electron");
 const ipcRenderer = electron.ipcRenderer;
-
 interface Props {
   setTheme: Function;
 }
@@ -30,5 +30,10 @@ export default function ThemeHandler({ setTheme }: Props) {
     }
   });
 
-  return <Calculator />;
+  return (
+    <>
+      <OSPreferenceBasedDiv />
+      <Calculator />
+    </>
+  );
 }
