@@ -113,7 +113,7 @@ function createWindow() {
 
   mainWindow.removeMenu();
   mainWindow.on("closed", () => (mainWindow = null));
-  //mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
   ipcMain.on("init", (...args) => {
     menuTemplate
       .find(byLabel("View"))
@@ -133,7 +133,8 @@ function createWindow() {
       menuTemplate
         .find(byLabel("View"))
         .submenu.find(byLabel("Themes"))
-        .submenu.find(x => x.checked === true)?.label
+        .submenu.find(x => x.checked === true)?.label,
+      nativeTheme.shouldUseDarkColors
     );
   });
 }
