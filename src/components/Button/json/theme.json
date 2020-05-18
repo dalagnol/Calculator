@@ -1,20 +1,26 @@
 {
   "light": {
-    "number": "#eaeaea",
-    "main": "#FF6ABD",
-    "secondary": "#7e7e7e",
-    "selected": "pink",
-    "maintext": "black",
-    "secondarytext": "white",
-    "selectedtext": "white"
+    "darknumber": "#DFA14D",
+    "lightnumber": "#E8B773",
+    "darkmain": "#DB0000",
+    "lightmain": "#F95656",
+    "darksecondary": "#C0822E",
+    "lightsecondary": "#CA9855",
+    "darkselected": "#F0EFED",
+    "lightselected": "white",
+    "text": "white",
+    "selectedtext": "#DB0000"
   },
   "dark": {
-    "number": "#7e7e7e",
-    "main": "#C0057C",
-    "secondary": "#eaeaea",
-    "selected": "white",
-    "maintext": "white",
-    "secondarytext": "black",
-    "selectedtext": "#C0057C"
+    "darknumber": "#CB8225",
+    "lightnumber": "#DC8F2E",
+    "darkmain": "#DB0000",
+    "lightmain": "#F95656",
+    "darksecondary": "#7B4B05",
+    "lightsecondary": "#875000",
+    "darkselected": "#F0EFED",
+    "lightselected": "white",
+    "text": "white",
+    "selectedtext": "#DB0000"
   }
 }

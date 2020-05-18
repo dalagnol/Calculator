@@ -16,8 +16,15 @@ const multiply = (x: number, y: number) => {
   return r;
 };
 
-const divide = (x: number, y: number) => {
-  let r = x / y;
+const divide = (x: number, y: number, setError: Function) => {
+  let r = 0;
+
+  if (y) {
+    r = x / y;
+  } else {
+    r = 0;
+    setError(true);
+  }
 
   return r;
 };
@@ -28,8 +35,8 @@ const percentage = (x: number, y: number = 0) => {
   if (!y) {
     r = x / 100;
   } else {
-    r = x / 100 * y;
-  };
+    r = (x / 100) * y;
+  }
 
   return r;
 };
@@ -46,7 +53,7 @@ const change = (x: number, y: number) => {
     r = r.slice(1);
   } else {
     r = `-${r}`;
-  }  
+  }
 
   return Number(r);
 };
@@ -57,7 +64,7 @@ let operations: any = {
   multiply,
   divide,
   percentage,
-  change,
-}
+  change
+};
 
 export default operations;
