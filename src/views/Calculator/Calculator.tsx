@@ -1,18 +1,12 @@
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  useCallback,
-  useMemo,
-} from "react";
+import React, { useState, useRef, useCallback, useMemo } from "react";
 
-import { useTheme } from "../../themes";
+import { useTheme } from "theme";
 
 import Operations from "../../operations";
 
 import { Container, Screen, Result } from "./styles";
 import { Button } from "../../components";
-import { theme } from "./json";
+import { themejson } from "./json";
 
 import {
   format as formatted,
@@ -20,11 +14,11 @@ import {
   opcodes,
   byKeycode,
   numberWithoutShift,
-  e as event,
+  e as event
 } from "./constants";
 
 export default function Calculator() {
-  const { Use } = useTheme("calculator", theme);
+  useTheme("calculator", themejson);
   const ref: any = useRef(null);
 
   const [editing, setEditing] = useState("x");
@@ -36,24 +30,10 @@ export default function Calculator() {
   const [newNumber, setNewNumber] = useState(false);
   const [displayY, setDisplayY] = useState(false);
   const [pressed, setPressed] = useState<number>(0);
+  const [willBeNegative, setWillBeNegative] = useState(false);
+  const [error, setError] = useState(false);
 
-  useEffect(
-    useCallback(() => {
-      setInterval(() => {
-        const Theme =
-          window
-            .getComputedStyle(document.body, null)
-            .getPropertyValue("background-color") === "rgb(0, 0, 0)"
-            ? "dark"
-            : "light";
-
-        Use(Theme);
-      }, 1000);
-    }, [Use]),
-    []
-  );
-
-  const clear = () => {
+  const clear = (exceptError: string = "") => {
     setEditing("x");
     setX(0);
     setY(0);
@@ -61,14 +41,19 @@ export default function Calculator() {
     setComma(1);
     setRow(false);
     setDisplayY(false);
+    setWillBeNegative(false);
+    !exceptError && setError(false);
 
     return true;
   };
 
   const operateTwoNumbers = (x: number, y: number, operation: string) => {
-    if (x && y && operation) {
-      const result = Operations[operation](x, y);
-      clear();
+    if (operation) {
+      const result =
+        operation !== "divide"
+          ? Operations[operation](x, y)
+          : Operations[operation](x, y, setError);
+      clear("exceptError");
       setNewNumber(true);
       setX(result);
 
@@ -109,15 +94,21 @@ export default function Calculator() {
 
       if (result === "0") {
         result = "";
+
+        if (willBeNegative) {
+          result = String(Operations.change(value, 0));
+        }
       }
 
       if (comma === 2) {
         result = result.concat(`.${value}`);
         setComma(0);
-      } else {
+      } else if (!willBeNegative) {
         result = result.concat(value);
         setNewNumber(false);
+        setError(false);
       }
+      setWillBeNegative(false);
 
       if (row || editing === "y") {
         setY(Number(result));
@@ -128,11 +119,12 @@ export default function Calculator() {
 
       return result;
     },
-    [comma, editing, newNumber, row, x, y]
+    [comma, editing, newNumber, row, x, y, willBeNegative]
   );
 
   const submitOperation = (op: string) => {
-    if (!x) {
+    if (!x && op === "subtract") {
+      setWillBeNegative(true);
       return true;
     } else if (operation) {
       operateTwoNumbers(x, y, operation);
@@ -169,15 +161,24 @@ export default function Calculator() {
   };
 
   const display = useMemo(
-    () => (editing === "y" && displayY ? formatted(y) : formatted(x)),
-    [displayY, editing, x, y]
+    () =>
+      !error
+        ? editing === "y" && displayY
+          ? formatted(y)
+          : formatted(x)
+        : "Math Error",
+    [displayY, editing, x, y, error]
   );
 
   const handlers: { [x: number]: Function } = {
     188: submitComma,
     190: submitComma,
-    27: clear,
-    67: clear,
+    27() {
+      clear();
+    },
+    67() {
+      clear();
+    },
     8: backspace,
     13() {
       operateTwoNumbers(x, y, operation);
@@ -214,7 +215,7 @@ export default function Calculator() {
         operateTwoNumbers(x, y, operation);
         setEditing("x");
       }
-    },
+    }
   };
 
   const handle = useCallback(
@@ -262,6 +263,7 @@ export default function Calculator() {
 
           result.push(
             <Button
+              key={i} 
               color={
                 column === 4 && operation === opcodes[row]
                   ? "selected"

@@ -24,43 +24,40 @@ export const Button = styled.button<Props>`
   ${({ color, theme }) =>
     (color === "number" &&
       `
-      background-color: ${theme.button?.number};
-      color: ${theme.button?.maintext};
+      background: radial-gradient(circle, ${theme.button?.lightnumber}, ${theme.button?.darknumber});
+      color: ${theme.button?.text};
       `) ||
     (color === "main" &&
       `
-      background-color: ${theme.button?.main};
-      color: ${theme.button?.maintext};
+      background: radial-gradient(circle, ${theme.button?.lightmain}, ${theme.button?.darkmain});
+      color: ${theme.button?.text};
       `) ||
     (color === "secondary" &&
       `
-      background-color: ${theme.button?.secondary};
-      color: ${theme.button?.secondarytext};
+      background: radial-gradient(circle, ${theme.button?.lightsecondary}, ${theme.button?.darksecondary});
+      color: ${theme.button?.text};
       `) ||
     (color === "selected" &&
       `
-      background-color: ${theme.button?.selected};
+      background: radial-gradient(circle, ${theme.button?.lightselected}, ${theme.button?.darkselected});
       color: ${theme.button?.selectedtext};
       `)}
 
-  &:active {
-    ${({ color, theme }) =>
-      (color === "number" &&
-        `
-          background-color: ${theme.button?.maintext};
-          color: ${theme.button?.number};
-        `) ||
-      (color === "main" &&
-        `
-          background-color: ${theme.button?.maintext};
-          color: ${theme.button?.secondarytext};
-        `) ||
-      (color === "secondary" &&
-        `
-          background-color: ${theme.button?.secondarytext};
-          color: ${theme.button?.secondary};
-        `)}
-  }
+      &:active {
+        ${({ color, theme }) =>
+          (color === "number" &&
+            `
+            background: radial-gradient(circle, ${theme.button?.darknumber}, ${theme.button?.lightsecondary});
+            `) ||
+          (color === "main" &&
+            `
+            background: radial-gradient(circle, ${theme.button?.darkmain}, ${theme.button?.lightmain});
+            `) ||
+          (color === "secondary" &&
+            `
+            background: radial-gradient(circle, ${theme.button?.darksecondary}, ${theme.button?.darknumber});
+            `)}
+      }
 
   ${({ position }) =>
     `

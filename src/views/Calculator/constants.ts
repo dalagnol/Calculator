@@ -26,10 +26,16 @@ const localised: { [y in spot]: character } = locale["en"];
 export function format(x: number | string) {
   x = String(x);
   let y = "";
+  let z = "";
 
   if (x.includes(".")) {
     y = x.substring(x.indexOf(".") + 1);
     x = x.substring(0, x.indexOf("."));
+  }
+
+  if (x.includes("-")) {
+    z = x.substring(1, x.indexOf("-"));
+    x = x.substring(x.indexOf("-") + 1);
   }
 
   const arr = [];
@@ -39,7 +45,9 @@ export function format(x: number | string) {
 
   arr.reverse();
 
-  return `${arr.join(localised.dec)}${Number(y) ? `${localised.sep}${y}` : ""}`;
+  return `${z}${arr.join(localised.dec)}${
+    Number(y) ? `${localised.sep}${y}` : ""
+  }`;
 }
 
 export const opcodes: { [x: number]: string } = {
