@@ -106,6 +106,7 @@ export default function Calculator() {
       } else if (!willBeNegative) {
         result = result.concat(value);
         setNewNumber(false);
+        setError(false);
       }
       setWillBeNegative(false);
 
@@ -165,7 +166,7 @@ export default function Calculator() {
         ? editing === "y" && displayY
           ? formatted(y)
           : formatted(x)
-        : "Error",
+        : "Math Error",
     [displayY, editing, x, y, error]
   );
 
