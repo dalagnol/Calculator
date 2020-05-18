@@ -113,7 +113,7 @@ function createWindow() {
 
   mainWindow.removeMenu();
   mainWindow.on("closed", () => (mainWindow = null));
-  mainWindow.webContents.openDevTools();
+  //mainWindow.webContents.openDevTools();
   ipcMain.on("init", (...args) => {
     menuTemplate
       .find(byLabel("View"))
